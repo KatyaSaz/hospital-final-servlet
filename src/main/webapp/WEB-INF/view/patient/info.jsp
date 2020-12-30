@@ -11,7 +11,7 @@
     </form>
 </div>
 <p>Patient name: ${patient.name} ${patient.surname}</p>
-<p>Patient genger: ${patient.gender}</p>
+<p>Patient gender: ${patient.gender}</p>
 <p>Year of birth: ${patient.year}</p>
 <p>Phone: ${patient.phone}</p>
 <p>Doctor name: ${patient.doctor.name} ${patient.doctor.surname}</p>
@@ -21,9 +21,10 @@
     <p>RecordType: ${record.recordType}</p>
     <p>Description: ${record.description}</p>
 <%--    @{/patient/download/{id}(id=${record.getId()})}--%>
-    <form method="POST" action="#">
+    <form id="saveButton" action="./patient" method="post">
         <c:if test="${record.recordType=='Diagnosis'}">
             <input type="submit" value="SAVE"/>
+            <input type="hidden" name="saveCardId" value = "${record.id}"/>
         </c:if>
     </form>
     <br/>

@@ -60,11 +60,11 @@ public class CardRecord {
                 '}';
     }
 
-    //    public String diagnoseToString(){
-//        return "Patient name: "+ patient.getName()+" "+ patient.getSurname()+"\n"
-//                +"Doctor name: "+ patient.getDoctor().getName()+" "+ patient.getDoctor().getSurname()+"\n"
-//                +recordType+": "+ description;
-//    }
+        public String diagnoseToString(){
+        return "Patient name: "+ patient.getName()+" "+ patient.getSurname()+"\n"
+                +"Doctor name: "+ patient.getDoctor().getName()+" "+ patient.getDoctor().getSurname()+"\n"
+                +recordType+": "+ description;
+    }
 
     public String getFileName(){
         return "diagnose_"+patient.getSurname()+".txt";

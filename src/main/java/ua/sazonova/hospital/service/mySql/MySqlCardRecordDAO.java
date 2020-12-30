@@ -64,6 +64,7 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
                 cardRecord.setId(rs.getInt("id"));
                 cardRecord.setRecordType(RecordType.valueOf(rs.getString("record_type")));
                 cardRecord.setDescription(rs.getString("description"));
+                cardRecord.setPatient(factoryDAO.getPatientDAO().getById(rs.getInt("pat_id")));
 
                 //TODO getPatient fields
             }
