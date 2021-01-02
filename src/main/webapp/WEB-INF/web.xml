@@ -9,17 +9,33 @@
     <servlet-name>patientPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.PatientController</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>patientPage</servlet-name>
     <url-pattern>/patient</url-pattern>
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>doctorPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.DoctorController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>doctorPage</servlet-name>
+    <url-pattern>/doctor</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>doctorShowPatientsPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.DoctorShowPatients</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>doctorShowPatientsPage</servlet-name>
+    <url-pattern>/patients</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>loginPage</servlet-name>
     <url-pattern>/login</url-pattern>
