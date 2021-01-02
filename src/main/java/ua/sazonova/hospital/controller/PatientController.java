@@ -38,8 +38,11 @@ public class PatientController extends HttpServlet {
         rd.forward(req, resp);
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        String logOUT = req.getParameter("logOUT");
+        System.out.println(logOUT);
         String saveCardId = req.getParameter("saveCardId");
         System.out.println(saveCardId);
         factoryDAO = FactoryDAO.getInstance(MY_SQL);
