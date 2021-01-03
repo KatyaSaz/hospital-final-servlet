@@ -42,6 +42,33 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminPage</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminPatientsPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminAllPatients</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminPatientsPage</servlet-name>
+    <url-pattern>/admin-patients</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminDoctorsPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminAllDoctors</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDoctorsPage</servlet-name>
+    <url-pattern>/admin-doctors</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>

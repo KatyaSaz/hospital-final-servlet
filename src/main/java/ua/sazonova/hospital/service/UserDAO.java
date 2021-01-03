@@ -8,4 +8,5 @@ public interface UserDAO {
     void create(User user);
     User getById(int id, Connection connection);
     User findByEmail(String email);
+    User getAdmin();
 }

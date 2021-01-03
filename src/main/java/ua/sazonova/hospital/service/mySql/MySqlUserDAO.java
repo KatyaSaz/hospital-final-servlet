@@ -4,14 +4,12 @@ import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
 import ua.sazonova.hospital.service.UserDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MySqlUserDAO implements UserDAO {
     private final String SELECT_USER_BY_EMAIL="SELECT * FROM `users` WHERE email=?";
     private final String SELECT_USER_BY_ID="SELECT * FROM `users` WHERE id=?";
+    private final String SELECT_ADMIN="SELECT * FROM `users` WHERE role='ADMIN'";
     private final String INSERT_USER="";
 
     private MySqlFactoryDAO factoryDAO;
@@ -74,7 +72,33 @@ public class MySqlUserDAO implements UserDAO {
                 throwables.printStackTrace();
             }
         }
+        return user;
+    }
 
+    @Override
+    public User getAdmin() {
+        User user = null;
+        Connection connection = factoryDAO.getConnection();
+        try(Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_ADMIN)){
+            while(rs.next()){
+                user =new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(Role.valueOf(rs.getString("role")));
+                user.setActive(rs.getBoolean("is_active"));
+                user.setIdMoreInfo(rs.getInt("more_info_id"));
+            }
+        } catch (SQLException exc) {
+            exc.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return user;
     }
 }

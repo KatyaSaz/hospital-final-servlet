@@ -14,10 +14,10 @@ import java.util.List;
 
 public class MySqlPatientDAO implements PatientDAO {
 
-//    private final String SELECT_PATIENTS_OF_ONE_DOCTOR="SELECT * FROM `patients` WHERE doc_id=?";
+    private final String SELECT_PATIENTS_OF_ONE_DOCTOR="SELECT * FROM `patients` WHERE doc_id=?";
 
     private final String SELECT_PATIENT_BY_ID="SELECT * FROM `patients` AS pat INNER JOIN `doctors` AS doc ON pat.doc_id=doc.id WHERE pat.id=?";
-
+    private final String SELECT_ALL="SELECT * FROM `patients`";
     private MySqlFactoryDAO factoryDAO;
 //    private DoctorDAO doctorDAO;
 //    private UserDAO userDAO;
@@ -82,7 +82,31 @@ public class MySqlPatientDAO implements PatientDAO {
 
     @Override
     public List<Patient> getAll() {
-        return null;
+        List<Patient> patients = new ArrayList<>();
+        Connection connection = factoryDAO.getConnection();
+        try(Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_ALL)){
+            while(rs.next()){
+                Patient patient = new Patient();
+                patient.setId(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setSurname(rs.getString("surname"));
+                patient.setGender(Gender.valueOf(rs.getString("gender")));
+                patient.setYear(rs.getInt("year"));
+                patient.setPhone(rs.getString("phone"));
+                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+                patient.setDoctor(factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id")));
+                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+                patients.add(patient);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patients;
     }
 
     @Override
@@ -96,42 +120,33 @@ public class MySqlPatientDAO implements PatientDAO {
 //
 //    }
 
-    public List<Patient> getPatients(int docID, Connection connection){
-        List<Patient> patients = new ArrayList<>();
-
-//        try(PreparedStatement ps = connection.prepareStatement(SELECT_PATIENTS_OF_ONE_DOCTOR)){
-//            ps.setInt(1, docID);
-//            ResultSet rs = ps.executeQuery();
-//            while(rs.next()){
-//                Patient patient =new Patient();
-//                patient.setId(rs.getInt("id"));
-//                patient.setName(rs.getString("name"));
-//                patient.setSurname(rs.getString("surname"));
-//                patient.setGender(Gender.valueOf(rs.getString("gender")));
-//                patient.setYear(rs.getInt("year"));
-//                patient.setPhone(rs.getString("phone"));
-//                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
-//                //patient.setUser(userDAO.getById(rs.getInt("user_id"), connection));
-//                //patient.setDoctor(factoryDAO.getDoctorDAO().getDoctor(rs.getInt("doc_id"), connection));
-//                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
-//                patients.add(patient);
-//            }
-//            rs.close();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-        return patients;
-    }
+//    public List<Patient> getPatients(int docID, Connection connection){
+//
+//    }
 
     @Override
-    public List<Patient> getPatientsOfOneDoctor(int docID) {
-        Connection connection = factoryDAO.getConnection();
-        List<Patient> patients = getPatients(docID, connection);
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection conn) {
+        List<Patient> patients = new ArrayList<>();
+        try(PreparedStatement ps = conn.prepareStatement(SELECT_PATIENTS_OF_ONE_DOCTOR)){
+            ps.setInt(1, doctor.getId());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Patient patient =new Patient();
+                patient.setId(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setSurname(rs.getString("surname"));
+                patient.setGender(Gender.valueOf(rs.getString("gender")));
+                patient.setYear(rs.getInt("year"));
+                patient.setPhone(rs.getString("phone"));
+                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), conn));
+                patient.setDoctor(doctor);
+                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, conn));
+                patients.add(patient);
+            }
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return  patients;
+        return patients;
     }
 }
