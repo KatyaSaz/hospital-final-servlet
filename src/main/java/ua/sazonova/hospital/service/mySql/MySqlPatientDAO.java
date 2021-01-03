@@ -15,9 +15,10 @@ import java.util.List;
 public class MySqlPatientDAO implements PatientDAO {
 
     private final String SELECT_PATIENTS_OF_ONE_DOCTOR="SELECT * FROM `patients` WHERE doc_id=?";
-
     private final String SELECT_PATIENT_BY_ID="SELECT * FROM `patients` AS pat INNER JOIN `doctors` AS doc ON pat.doc_id=doc.id WHERE pat.id=?";
     private final String SELECT_ALL="SELECT * FROM `patients`";
+    private final String SELECT_NON_REGISTER = "SELECT pat.id, pat.name, pat.surname, pat.gender, pat.year, pat.phone, pat.doc_id, pat.user_id FROM users AS user LEFT JOIN patients AS pat ON user.id=pat.user_id WHERE user.role='PATIENT' AND user.is_active=false";
+
     private MySqlFactoryDAO factoryDAO;
 //    private DoctorDAO doctorDAO;
 //    private UserDAO userDAO;
@@ -111,7 +112,31 @@ public class MySqlPatientDAO implements PatientDAO {
 
     @Override
     public List<Patient> getNonActive() {
-        return null;
+        List<Patient> patients = new ArrayList<>();
+        Connection connection = factoryDAO.getConnection();
+        try(Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_NON_REGISTER)){
+            while(rs.next()){
+                Patient patient = new Patient();
+                patient.setId(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setSurname(rs.getString("surname"));
+                patient.setGender(Gender.valueOf(rs.getString("gender")));
+                patient.setYear(rs.getInt("year"));
+                patient.setPhone(rs.getString("phone"));
+                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+                patient.setDoctor(factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id")));
+                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+                patients.add(patient);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patients;
     }
 
 //    private Doctor getDoctorInPatient(int docId){

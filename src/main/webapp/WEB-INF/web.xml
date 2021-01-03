@@ -69,6 +69,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminNonRegPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminAllNonReg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminNonRegPage</servlet-name>
+    <url-pattern>/admin-non-reg</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>
