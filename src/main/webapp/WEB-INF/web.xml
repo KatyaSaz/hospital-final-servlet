@@ -33,6 +33,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>doctorShowOnePatientPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.DoctorOnePatient</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>doctorShowOnePatientPage</servlet-name>
+    <url-pattern>/doc-patient</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>

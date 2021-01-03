@@ -7,7 +7,6 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <meta charset="UTF-8">
     <title><fmt:message key="my.info"/></title>
 </head>
 <body>

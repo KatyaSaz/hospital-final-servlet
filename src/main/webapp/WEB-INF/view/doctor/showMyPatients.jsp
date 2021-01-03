@@ -23,6 +23,7 @@
     </div>
 </div>
 <br/>
+<br/>
 
 <h3><fmt:message key="doc.show.patients.title"/></h3>
 <form method="POST" action="#">
@@ -44,7 +45,7 @@
 <%--<p c:if="${doctor.patients == 'null'}"><fmt:message key="doctor.no.patients" /></p>--%>
 
 <c:forEach items="${doctor.patients}" var="patient">
-    <a href="/patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
+    <a href="/doc-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
     <br/>
 </c:forEach>
 
