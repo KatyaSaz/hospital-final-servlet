@@ -78,6 +78,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminOneDoctorPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminOneDoctor</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminOneDoctorPage</servlet-name>
+    <url-pattern>/admin-doctor</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>

@@ -10,24 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-public class AdminAllDoctors extends HttpServlet {
-    private static final String ADMIN_DOCTORS_FORM="WEB-INF/view/admin/showDoctors.jsp";
+public class AdminOneDoctor extends HttpServlet {
+    private static final String ADMIN_ONE_DOCTOR_FORM="WEB-INF/view/admin/oneDoctor.jsp";
     public static final int MY_SQL = 1;
     private FactoryDAO factoryDAO;
-    private DoctorDAO doctorDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher(ADMIN_DOCTORS_FORM);
+        RequestDispatcher rd = req.getRequestDispatcher(ADMIN_ONE_DOCTOR_FORM);
         factoryDAO = FactoryDAO.getInstance(MY_SQL);
-        doctorDAO = factoryDAO.getDoctorDAO();
-        List<Doctor> doctors = doctorDAO.getAll();
-        for(Doctor patient:doctors){
-            System.out.println(patient.getId()+"   "+ patient.getName()+" "+ patient.getPatients().size());
-        }
-        req.setAttribute("doctors", doctors);
+        String docID = req.getParameter("docId");
+        Doctor doctor = (docID!=null)? factoryDAO.getDoctorDAO().getById(Integer.valueOf(docID)): null;
+        req.setAttribute("doctor", doctor);
         rd.forward(req, resp);
     }
 }
