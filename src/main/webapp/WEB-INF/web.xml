@@ -42,6 +42,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>doctorWriteCardPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.DoctorWriteCard</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>doctorWriteCardPage</servlet-name>
+    <url-pattern>/doc-patient-write</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AdminPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.AdminController</servlet-class>
   </servlet>
@@ -84,6 +93,15 @@
   <servlet-mapping>
     <servlet-name>AdminOneDoctorPage</servlet-name>
     <url-pattern>/admin-doctor</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminOnePatientPage</servlet-name>
+    <servlet-class>ua.sazonova.hospital.controller.AdminOnePatient</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminOnePatientPage</servlet-name>
+    <url-pattern>/admin-patient</url-pattern>
   </servlet-mapping>
 
   <servlet>

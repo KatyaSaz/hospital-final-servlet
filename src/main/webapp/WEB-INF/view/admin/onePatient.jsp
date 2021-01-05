@@ -7,17 +7,17 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title><fmt:message key="one.patient.title"/></title>
+    <title><fmt:message key="one.doctor.title"/></title>
 </head>
-<p>
+<body>
 <div class="topMenu">
     <div class="logOut" style="float:left;">
         <form action="/login" method="GET">
-            <button type="submit"><fmt:message key="logout" /></button>
+            <button type="submit"><fmt:message key="logout"/></button>
         </form>
     </div>
     <div class="goBack" style="float:left;">
-        <form action="./doctor?docId=${patient.doctor.id}" method="GET">
+        <form action="/admin" method="GET">
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>
@@ -31,17 +31,13 @@
 <p><fmt:message key="patient.doctor" /> ${patient.doctor.name} ${patient.doctor.surname}</p>
 <br/>
 <br/>
-<%--@{/doctor/patients/{id}/write(id=${patient.getId()})}--%>
-<a href="/doc-patient-write"><fmt:message key="doctor.add.entry"/></a>
-<br/>
-<br/>
 <p>---> <fmt:message key="patient.record.title" /> <---</p>
-<p c:if="${patient.getRecords().size() == 0}"><fmt:message key="patient.no.records"/></p>
+<%--FIX IT--%>
+<%--<p c:if="${patient.records.size() == 0}"><fmt:message key="patient.no.records"/></p>--%>
 <c:forEach items="${patient.records}" var="record">
     <p><fmt:message key="patient.record.type" /> ${record.recordType}</p>
     <p><fmt:message key="patient.record.description" /> ${record.description}</p>
     <br/>
 </c:forEach>
-</div>
 </body>
 </html>
