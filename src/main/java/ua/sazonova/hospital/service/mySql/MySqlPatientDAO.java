@@ -18,15 +18,12 @@ public class MySqlPatientDAO implements PatientDAO {
     private final String SELECT_PATIENT_BY_ID="SELECT * FROM `patients` AS pat INNER JOIN `doctors` AS doc ON pat.doc_id=doc.id WHERE pat.id=?";
     private final String SELECT_ALL="SELECT * FROM `patients`";
     private final String SELECT_NON_REGISTER = "SELECT pat.id, pat.name, pat.surname, pat.gender, pat.year, pat.phone, pat.doc_id, pat.user_id FROM users AS user LEFT JOIN patients AS pat ON user.id=pat.user_id WHERE user.role='PATIENT' AND user.is_active=false";
+    private  final String UPDATE_DOCTOR_IN_PATIENT = "UPDATE `patients` SET `doc_id`=? WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
-//    private DoctorDAO doctorDAO;
-//    private UserDAO userDAO;
 
     public MySqlPatientDAO(MySqlFactoryDAO factoryDAO) {
         this.factoryDAO = factoryDAO;
-//        doctorDAO = factoryDAO.getDoctorDAO();
-//        userDAO = factoryDAO.getUserDAO();
     }
 
     @Override
@@ -37,6 +34,24 @@ public class MySqlPatientDAO implements PatientDAO {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public void updateDoctor(Patient patient) {
+        Connection connection = factoryDAO.getConnection();
+        try(PreparedStatement ps=connection.prepareStatement(UPDATE_DOCTOR_IN_PATIENT);){
+            ps.setInt(1, patient.getDoctor().getId());
+            ps.setInt(2, patient.getId());
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override

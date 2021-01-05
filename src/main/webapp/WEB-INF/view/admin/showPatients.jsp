@@ -42,16 +42,17 @@
 
 <c:forEach items="${patients}" var="patient">
     <a href="/admin-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
-<%--    @{/admin/appoint/{id}(id=${patient.getId()})}--%>
-<%--    <form method="POST" action="#">--%>
-<%--        <select class="form-control" id="docId" name="docId">--%>
-<%--            <option c:forEach items="${doctors}" var="doc"--%>
-<%--                    value="${doc.id}"--%>
-<%--                    text="${doc.name} (${doc.type})"--%>
-<%--                    selected=<c:if test="${doc.id} == ${patient.doctor.id}> />--%>
-<%--        </select>--%>
-<%--        <button type="submit">[[#{admin.appoint.button}]]</button>--%>
-<%--    </form>--%>
+    <form method="post" action="/admin-patients">
+        <select class="form-control" name="newDoc">
+            <c:forEach items="${doctors}" var="doc">
+                <option value="${doc.id}" <c:if test="${doc.id eq patient.doctor.id}">selected</c:if>>
+                        ${doc.name} (${doc.type})
+                </option>
+            </c:forEach>
+        </select>
+        <input type="hidden" name="patId" value="${patient.id}"/>
+        <button type="submit"><fmt:message key="admin.appoint.button"/></button>
+    </form>
 
     <form method="POST" action="#">
         <input type="submit" value="<fmt:message key="admin.delete.patient.button"/>"/>

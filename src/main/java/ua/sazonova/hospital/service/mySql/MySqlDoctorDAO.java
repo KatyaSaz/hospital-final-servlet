@@ -37,6 +37,8 @@ public class MySqlDoctorDAO implements DoctorDAO {
 
     }
 
+
+
     @Override
     public Doctor getById(int id) {
         Connection connection = factoryDAO.getConnection();
