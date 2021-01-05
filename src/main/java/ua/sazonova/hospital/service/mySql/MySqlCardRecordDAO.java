@@ -17,8 +17,8 @@ import java.util.List;
 public class MySqlCardRecordDAO implements CardRecordDAO {
     private final String SELECT_RECORD_BY_ID = "SELECT * FROM `card_records` WHERE id=?";
 
-    private final String SELECT_RECORD_OF_ONE_PATIENT="SELECT * FROM `card_records` WHERE pat_id=?";
-    private final String INSERT_USER="";
+   // private final String SELECT_RECORD_OF_ONE_PATIENT="SELECT * FROM `card_records` WHERE pat_id=?";
+    private final String INSERT_RECORD="INSERT INTO `card_records`(`description`, `record_type`, `pat_id`) VALUES (?,?,?)";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -27,10 +27,26 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
     }
 
     @Override
-    public void create(CardRecord cardRecord) {
+    public void create(String description, String type, int patId) {
+        Connection connection = factoryDAO.getConnection();
+        try(PreparedStatement ps=connection.prepareStatement(INSERT_RECORD);){
+            ps.setString(1, description);
+            ps.setString(2, type);
+            ps.setInt(3, patId);
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
 
     }
-//    User user = null;
+
+    //    User user = null;
 //    Connection connection = factoryDAO.getConnection();
 //        try(
 //    PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_EMAIL)){

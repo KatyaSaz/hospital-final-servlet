@@ -18,6 +18,12 @@ public class CardRecord {
         this.patient = patient;
     }
 
+    public CardRecord(RecordType recordType, String description, Patient patient) {
+        this.recordType = recordType;
+        this.description = description;
+        this.patient = patient;
+    }
+
     public int getId() {
         return id;
     }

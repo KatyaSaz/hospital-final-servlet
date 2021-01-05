@@ -27,6 +27,7 @@ public class DoctorOnePatient extends HttpServlet {
         String patId = req.getParameter("patId");
         Patient patient = (patId!=null)? patientDAO.getById(Integer.valueOf(patId)): null;
         req.setAttribute("patient", patient);
+        req.getSession().setAttribute("ID", patient.getId());
         req.getSession().setAttribute("doctorID", patient.getDoctor().getId());
         rd.forward(req, resp);
     }

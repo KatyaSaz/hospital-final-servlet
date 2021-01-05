@@ -26,16 +26,13 @@
 <br/>
 
 <h3><fmt:message key="card.create.title"/></h3>
-<%--@{/doctor/patients/{id}/record(id=${ID})}--%>
-<%--object="${record}"--%>
-<form method="POST" action="#" >
-    <label for="description"><fmt:message key="card.description"/></label>
-<%--    field="*{description}"--%>
-    <textarea id="description"></textarea>
+
+<form method="post" action="/doc-patient-write" >
+    <label for="descrip"><fmt:message key="card.description"/></label>
+    <textarea id="descrip" name="description"></textarea>
     <br/>
     <label for="type"><fmt:message key="card.record.type"/></label>
-<%--    field="*{recordType}"--%>
-    <select  id="type">
+    <select  id="type" name="type">
         <option value="Direction"><fmt:message key="record.type.direction"/></option>
         <option value="Execution"><fmt:message key="record.type.execution"/></option>
         <option value="Diagnosis"><fmt:message key="record.type.diagnosis"/></option>
