@@ -7,15 +7,14 @@ import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.entity.Patient;
 
 public class PatientService {
+
     public static final int MY_SQL = 1;
-    private FactoryDAO factoryDAO;
     private PatientDAO patientDAO;
     private CardRecordDAO cardRecordDAO;
 
     public PatientService(){
-        factoryDAO = FactoryDAO.getInstance(MY_SQL);
-        patientDAO = factoryDAO.getPatientDAO();
-        cardRecordDAO = factoryDAO.getCardRecordDAO();
+        patientDAO = FactoryDAO.getInstance(MY_SQL).getPatientDAO();
+        cardRecordDAO = FactoryDAO.getInstance(MY_SQL).getCardRecordDAO();
     }
 
     public Patient getPatientById(String patientId){

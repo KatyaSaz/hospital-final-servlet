@@ -43,7 +43,7 @@
 <c:forEach items="${patients}" var="patient">
     <a href="/admin-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
     <form method="post" action="/admin-patients">
-        <select class="form-control" name="newDoc">
+        <select class="form-control" name="newDocId">
             <c:forEach items="${doctors}" var="doc">
                 <option value="${doc.id}" <c:if test="${doc.id eq patient.doctor.id}">selected</c:if>>
                         ${doc.name} (${doc.type})

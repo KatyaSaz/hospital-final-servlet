@@ -26,7 +26,6 @@ public class DoctorWriteCard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws IOException {
         String patientId = req.getParameter("patientId");
-        System.out.println("PAT_ID "+patientId);
         int patId = Integer.valueOf(patientId);
         String description = req.getParameter("description");
         String type = req.getParameter("type");

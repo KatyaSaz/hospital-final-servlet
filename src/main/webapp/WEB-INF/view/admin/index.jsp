@@ -19,7 +19,7 @@
     <form action="/login" method="GET">
         <a href="?sessionLocale=en">EN</a>
         <a href="?sessionLocale=ru">RU</a>
-        <button type="submit"id="logOUT"><fmt:message key="logout" /></button>
+        <button type="submit" id="logOUT"><fmt:message key="logout" /></button>
     </form>
 </div>
 
