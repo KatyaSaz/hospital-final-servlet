@@ -1,8 +1,6 @@
-package ua.sazonova.hospital.service;
+package ua.sazonova.hospital.dao;
 
 import ua.sazonova.hospital.entity.Doctor;
-
-import java.sql.Connection;
 
 public interface DoctorDAO extends SimpleDAO<Doctor>{
 

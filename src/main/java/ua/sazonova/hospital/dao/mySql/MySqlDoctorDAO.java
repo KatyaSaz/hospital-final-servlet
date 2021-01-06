@@ -1,14 +1,9 @@
-package ua.sazonova.hospital.service.mySql;
+package ua.sazonova.hospital.dao.mySql;
 
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.DoctorType;
-import ua.sazonova.hospital.entity.enam.Gender;
-import ua.sazonova.hospital.entity.enam.Role;
-import ua.sazonova.hospital.service.DoctorDAO;
-import ua.sazonova.hospital.service.PatientDAO;
-import ua.sazonova.hospital.service.UserDAO;
+import ua.sazonova.hospital.dao.DoctorDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,6 +15,9 @@ public class MySqlDoctorDAO implements DoctorDAO {
     //private final String SELECT_DOCTOR = "SELECT * FROM doctors AS doc LEFT JOIN patients AS pat ON doc.id=pat.doc_id WHERE doc.id=?";
     private final String SELECT_ALL="SELECT * FROM `doctors`";
     private final String SELECT_NON_REGISTER = "SELECT doc.id, doc.name, doc.surname, doc.type, doc.experience, doc.user_id FROM users AS user LEFT JOIN doctors AS doc ON user.id=doc.user_id WHERE user.role='DOCTOR' AND user.is_active=false";
+    private final String SELECT_USER_ID = "SELECT user_id FROM `doctors` WHERE id=?";
+
+
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -37,6 +35,10 @@ public class MySqlDoctorDAO implements DoctorDAO {
 
     }
 
+    @Override
+    public int getUserId(int id){
+        return factoryDAO.getUserDAO().getIdOfUser(id, SELECT_USER_ID);
+    }
 
 
     @Override

@@ -28,6 +28,7 @@
 <c:forEach items="${doctors}" var="doctor">
     <a href="/admin-doctor?docId=${doctor.id}">${doctor.name} ${doctor.surname}</a>
     <form method="POST" action="#">
+        <input type="hidden" name="forRegDocId" value="${doctor.id}"/>
         <input type="submit" value="<fmt:message key="admin.register.button"/>"/>
     </form>
     <br/>
@@ -37,7 +38,8 @@
 <h3><fmt:message key="admin.non.reg.patients"/></h3>
 <c:forEach items="${patients}" var="patient">
     <a href="/admin-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
-    <form method="POST" action="#">
+    <form method="post" action="/admin-non-reg">
+        <input type="hidden" name="forRegPatId" value="${patient.id}"/>
         <input type="submit" value="<fmt:message key="admin.register.button"/>"/>
     </form>
     <br/>

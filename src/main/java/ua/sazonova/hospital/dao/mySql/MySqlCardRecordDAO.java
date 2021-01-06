@@ -1,11 +1,9 @@
-package ua.sazonova.hospital.service.mySql;
+package ua.sazonova.hospital.dao.mySql;
 
 import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.RecordType;
-import ua.sazonova.hospital.entity.enam.Role;
-import ua.sazonova.hospital.service.CardRecordDAO;
+import ua.sazonova.hospital.dao.CardRecordDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

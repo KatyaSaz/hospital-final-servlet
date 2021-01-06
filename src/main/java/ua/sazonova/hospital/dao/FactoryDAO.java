@@ -1,6 +1,6 @@
-package ua.sazonova.hospital.service;
+package ua.sazonova.hospital.dao;
 
-import ua.sazonova.hospital.service.mySql.MySqlFactoryDAO;
+import ua.sazonova.hospital.dao.mySql.MySqlFactoryDAO;
 
 public abstract class FactoryDAO {
 

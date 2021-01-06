@@ -1,11 +1,8 @@
 package ua.sazonova.hospital.controller;
 
 import ua.sazonova.hospital.entity.Doctor;
-import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.service.CardRecordDAO;
-import ua.sazonova.hospital.service.DoctorDAO;
-import ua.sazonova.hospital.service.FactoryDAO;
-import ua.sazonova.hospital.service.PatientDAO;
+import ua.sazonova.hospital.dao.DoctorDAO;
+import ua.sazonova.hospital.dao.FactoryDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 public class DoctorController extends HttpServlet {
     private static final String DOCTOR_FORM="WEB-INF/view/doctor/index.jsp";

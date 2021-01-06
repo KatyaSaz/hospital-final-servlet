@@ -1,4 +1,4 @@
-package ua.sazonova.hospital.service;
+package ua.sazonova.hospital.dao;
 
 import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.entity.Patient;

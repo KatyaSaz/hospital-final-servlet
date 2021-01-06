@@ -1,7 +1,7 @@
 package ua.sazonova.hospital.controller;
 
 import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.service.FactoryDAO;
+import ua.sazonova.hospital.dao.FactoryDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

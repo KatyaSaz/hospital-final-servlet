@@ -1,6 +1,6 @@
-package ua.sazonova.hospital.service.mySql;
+package ua.sazonova.hospital.dao.mySql;
 
-import ua.sazonova.hospital.service.*;
+import ua.sazonova.hospital.dao.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

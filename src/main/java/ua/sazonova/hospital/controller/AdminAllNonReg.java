@@ -2,8 +2,7 @@ package ua.sazonova.hospital.controller;
 
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.service.DoctorDAO;
-import ua.sazonova.hospital.service.FactoryDAO;
+import ua.sazonova.hospital.dao.FactoryDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,5 +26,24 @@ public class AdminAllNonReg extends HttpServlet {
         req.setAttribute("doctors", doctors);
         req.setAttribute("patients", patients);
         rd.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String docId  = req.getParameter("forRegDocId");
+        if(docId!=null){
+            int userID=factoryDAO.getDoctorDAO().getUserId(Integer.valueOf(docId));
+            factoryDAO.getUserDAO().makeUserActive(userID);
+            resp.sendRedirect("./admin-doctors");
+        }
+//        System.out.println("docId"+docId);
+        String patId = req.getParameter("forRegPatId");
+        if(patId!=null){
+            int userID=factoryDAO.getPatientDAO().getUserId(Integer.valueOf(patId));
+            factoryDAO.getUserDAO().makeUserActive(userID);
+            resp.sendRedirect("./admin-patients");
+        }
+//
+//        System.out.println("patID"+patId);
     }
 }

@@ -2,20 +2,18 @@ package ua.sazonova.hospital.controller;
 
 import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.entity.Patient;
-import ua.sazonova.hospital.service.CardRecordDAO;
-import ua.sazonova.hospital.service.FactoryDAO;
-import ua.sazonova.hospital.service.PatientDAO;
+import ua.sazonova.hospital.dao.CardRecordDAO;
+import ua.sazonova.hospital.dao.FactoryDAO;
+import ua.sazonova.hospital.dao.PatientDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.http.HttpHeaders;
 
 public class PatientController extends HttpServlet {
     private static final String PATIENT_FORM="WEB-INF/view/patient/info.jsp";

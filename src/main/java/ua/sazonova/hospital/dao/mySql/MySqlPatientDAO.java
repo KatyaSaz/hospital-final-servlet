@@ -1,12 +1,10 @@
-package ua.sazonova.hospital.service.mySql;
+package ua.sazonova.hospital.dao.mySql;
 
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 import ua.sazonova.hospital.entity.enam.Gender;
-import ua.sazonova.hospital.service.DoctorDAO;
-import ua.sazonova.hospital.service.PatientDAO;
-import ua.sazonova.hospital.service.UserDAO;
+import ua.sazonova.hospital.dao.PatientDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,6 +17,7 @@ public class MySqlPatientDAO implements PatientDAO {
     private final String SELECT_ALL="SELECT * FROM `patients`";
     private final String SELECT_NON_REGISTER = "SELECT pat.id, pat.name, pat.surname, pat.gender, pat.year, pat.phone, pat.doc_id, pat.user_id FROM users AS user LEFT JOIN patients AS pat ON user.id=pat.user_id WHERE user.role='PATIENT' AND user.is_active=false";
     private  final String UPDATE_DOCTOR_IN_PATIENT = "UPDATE `patients` SET `doc_id`=? WHERE id=?";
+    private final String SELECT_USER_ID = "SELECT user_id FROM `patients` WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -34,6 +33,11 @@ public class MySqlPatientDAO implements PatientDAO {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public int getUserId(int id){
+        return factoryDAO.getUserDAO().getIdOfUser(id, SELECT_USER_ID);
     }
 
     @Override

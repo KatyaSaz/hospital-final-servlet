@@ -1,8 +1,8 @@
-package ua.sazonova.hospital.service.mySql;
+package ua.sazonova.hospital.dao.mySql;
 
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
-import ua.sazonova.hospital.service.UserDAO;
+import ua.sazonova.hospital.dao.UserDAO;
 
 import java.sql.*;
 
@@ -11,6 +11,7 @@ public class MySqlUserDAO implements UserDAO {
     private final String SELECT_USER_BY_ID="SELECT * FROM `users` WHERE id=?";
     private final String SELECT_ADMIN="SELECT * FROM `users` WHERE role='ADMIN'";
     private final String INSERT_USER="";
+    private  final String UPDATE_USER_ACTIVE = "UPDATE `users` SET `is_active`=? WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -21,6 +22,46 @@ public class MySqlUserDAO implements UserDAO {
     @Override
     public void create(User user) {
 
+    }
+
+    public int getIdOfUser(int id, String request){
+        int userId = -1;
+        Connection connection = factoryDAO.getConnection();
+        try(PreparedStatement ps = connection.prepareStatement(request)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                userId = rs.getInt("user_id");
+            }
+            rs.close();
+        } catch (SQLException exc) {
+            exc.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return userId;
+    }
+
+    @Override
+    public void makeUserActive(int id) {
+        Connection connection = factoryDAO.getConnection();
+        try(PreparedStatement ps=connection.prepareStatement(UPDATE_USER_ACTIVE);){
+            ps.setBoolean(1, true);
+            ps.setInt(2, id);
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override
