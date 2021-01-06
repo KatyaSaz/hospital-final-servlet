@@ -1,7 +1,7 @@
-package ua.sazonova.hospital.controller;
+package ua.sazonova.hospital.controller.admin;
 
 import ua.sazonova.hospital.constants.View;
-import ua.sazonova.hospital.service.DoctorService;
+import ua.sazonova.hospital.service.PatientService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/doctor-patients")
-public class DoctorShowPatients extends HttpServlet {
-    private DoctorService doctorService = new DoctorService();
+@WebServlet("/admin-patient")
+public class AdminOnePatient extends HttpServlet {
+    private PatientService patientService = new PatientService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_HIS_PATIENTS_VIEW);
-        String docID = req.getParameter("docId");
-        req.setAttribute("doctor", doctorService.getDoctorById(docID));
+        RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_ONE_PATIENT_VIEW);
+        String patId = req.getParameter("patId");
+        req.setAttribute("patient", patientService.getPatientById(patId));
         rd.forward(req, resp);
     }
 }

@@ -53,7 +53,8 @@
 
 <c:forEach items="${doctors}" var="doctor">
     <a href="/admin-doctor?docId=${doctor.id}">${doctor.name} ${doctor.surname}</a>
-    <form method="POST" action="#">
+    <form method="POST" action="/admin-doctors">
+        <input type="hidden" name="deleteDocId" value="${doctor.id}"/>
         <input type="submit" value="<fmt:message key="delete.button"/>"/>
     </form>
     <br/>

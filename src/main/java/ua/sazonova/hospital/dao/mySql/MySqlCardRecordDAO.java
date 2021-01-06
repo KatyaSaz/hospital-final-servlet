@@ -17,7 +17,7 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
 
    // private final String SELECT_RECORD_OF_ONE_PATIENT="SELECT * FROM `card_records` WHERE pat_id=?";
     private final String INSERT_RECORD="INSERT INTO `card_records`(`description`, `record_type`, `pat_id`) VALUES (?,?,?)";
-
+    private final String DELETE_RECORD_OF_ONE_PATIENT = "DELETE FROM `card_records` WHERE pat_id=?";
     private MySqlFactoryDAO factoryDAO;
 
     public MySqlCardRecordDAO(MySqlFactoryDAO factoryDAO) {
@@ -44,28 +44,15 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
 
     }
 
-    //    User user = null;
-//    Connection connection = factoryDAO.getConnection();
-//        try(
-//    PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_EMAIL)){
-//        ps.setString(1, email);
-//        ResultSet rs = ps.executeQuery();
-//        while(rs.next()){
-//            user =new User();
-//            user.setId(rs.getInt("id"));
-//            user.setEmail(rs.getString("email"));
-//            user.setPassword(rs.getString("password"));
-//            user.setRole(Role.valueOf(rs.getString("role")));
-//            user.setActive(rs.getBoolean("is_active"));
-//            user.setIdMoreInfo(rs.getInt("more_info_id"));
-//        }
-//
-//    } catch (
-//    SQLException exc) {
-//        exc.printStackTrace();
-//    }
-//
-//        return user;
+    @Override
+    public void deleteRecordsOfOnePatient(int patId, Connection connection) throws SQLException{
+        PreparedStatement ps = connection.prepareStatement(DELETE_RECORD_OF_ONE_PATIENT);
+        ps.setInt(1, patId);
+        ps.execute();
+        ps.close();
+    }
+
+
     @Override
     public CardRecord getByID(int id) {
         CardRecord cardRecord = null;

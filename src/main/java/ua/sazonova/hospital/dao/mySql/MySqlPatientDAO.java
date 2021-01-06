@@ -18,6 +18,7 @@ public class MySqlPatientDAO implements PatientDAO {
     private final String SELECT_NON_REGISTER = "SELECT pat.id, pat.name, pat.surname, pat.gender, pat.year, pat.phone, pat.doc_id, pat.user_id FROM users AS user LEFT JOIN patients AS pat ON user.id=pat.user_id WHERE user.role='PATIENT' AND user.is_active=false";
     private  final String UPDATE_DOCTOR_IN_PATIENT = "UPDATE `patients` SET `doc_id`=? WHERE id=?";
     private final String SELECT_USER_ID = "SELECT user_id FROM `patients` WHERE id=?";
+    private final String DELETE_PATIENT="DELETE FROM `patients` WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -30,9 +31,36 @@ public class MySqlPatientDAO implements PatientDAO {
 
     }
 
+    private void deletePatient(int id, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(DELETE_PATIENT);
+        ps.setInt(1, id);
+        ps.execute();
+        ps.close();
+    }
+
     @Override
     public void delete(int id) {
-
+        Connection connection= factoryDAO.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            deletePatient(id, connection);
+            factoryDAO.getUserDAO().delete(getUserId(id), connection);
+            factoryDAO.getCardRecordDAO().deleteRecordsOfOnePatient(id, connection);
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -83,8 +111,6 @@ public class MySqlPatientDAO implements PatientDAO {
                 doctor.setExperience(rs.getInt("experience"));
                 doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("doc.user_id"), connection));
                 patient.setDoctor(doctor);
-                //patient.setUser(userDAO.getById(rs.getInt("user_id"), connection));
-
                 patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
             }
             rs.close();
@@ -158,15 +184,6 @@ public class MySqlPatientDAO implements PatientDAO {
         return patients;
     }
 
-//    private Doctor getDoctorInPatient(int docId){
-//        Doctor doctor =
-//        return doctor;
-//
-//    }
-
-//    public List<Patient> getPatients(int docID, Connection connection){
-//
-//    }
 
     @Override
     public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection conn) {

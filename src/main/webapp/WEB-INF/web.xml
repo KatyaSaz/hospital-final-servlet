@@ -6,60 +6,6 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
-    <servlet-name>AdminPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminPage</servlet-name>
-    <url-pattern>/admin</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>AdminPatientsPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminAllPatients</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminPatientsPage</servlet-name>
-    <url-pattern>/admin-patients</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>AdminDoctorsPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminAllDoctors</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminDoctorsPage</servlet-name>
-    <url-pattern>/admin-doctors</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>AdminNonRegPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminAllNonReg</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminNonRegPage</servlet-name>
-    <url-pattern>/admin-non-reg</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>AdminOneDoctorPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminOneDoctor</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminOneDoctorPage</servlet-name>
-    <url-pattern>/admin-doctor</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>AdminOnePatientPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.AdminOnePatient</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminOnePatientPage</servlet-name>
-    <url-pattern>/admin-patient</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>loginPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
   </servlet>

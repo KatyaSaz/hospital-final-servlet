@@ -1,4 +1,4 @@
-package ua.sazonova.hospital.controller;
+package ua.sazonova.hospital.controller.doctor;
 
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.service.DoctorService;

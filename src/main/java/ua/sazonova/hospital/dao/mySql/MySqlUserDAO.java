@@ -12,6 +12,7 @@ public class MySqlUserDAO implements UserDAO {
     private final String SELECT_ADMIN="SELECT * FROM `users` WHERE role='ADMIN'";
     private final String INSERT_USER="";
     private  final String UPDATE_USER_ACTIVE = "UPDATE `users` SET `is_active`=? WHERE id=?";
+    private final String DELETE_USER= "DELETE FROM `users` WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -22,6 +23,14 @@ public class MySqlUserDAO implements UserDAO {
     @Override
     public void create(User user) {
 
+    }
+
+    @Override
+    public void delete(int id, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(DELETE_USER);
+        ps.setInt(1, id);
+        ps.execute();
+        ps.close();
     }
 
     public int getIdOfUser(int id, String request){
