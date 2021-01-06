@@ -17,26 +17,26 @@
         </form>
     </div>
     <div class="goBack" style="float:left;">
-        <form action="./doctor?docId=${patient.doctor.id}" method="GET">
+        <form action="/doctor" method="GET">
+            <input type="hidden" name="docId" value="${patient.doctor.id}"/>
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>
 </div>
 <br/>
 <br/>
-<p><fmt:message key="my.name" /> ${patient.name} ${patient.surname}</p>
-<p><fmt:message key="patient.gender" /> ${patient.gender}</p>
-<p><fmt:message key="patient.year" /> ${patient.year}</p>
-<p><fmt:message key="patient.phone" /> ${patient.phone}</p>
-<p><fmt:message key="patient.doctor" /> ${patient.doctor.name} ${patient.doctor.surname}</p>
+<p><fmt:message key="my.name"/> ${patient.name} ${patient.surname}</p>
+<p><fmt:message key="patient.gender"/> ${patient.gender}</p>
+<p><fmt:message key="patient.year"/> ${patient.year}</p>
+<p><fmt:message key="patient.phone"/> ${patient.phone}</p>
+<p><fmt:message key="patient.doctor"/> ${patient.doctor.name} ${patient.doctor.surname}</p>
 <br/>
 <br/>
-<%--@{/doctor/patients/{id}/write(id=${patient.getId()})}--%>
-<a href="/doc-patient-write"><fmt:message key="doctor.add.entry"/></a>
+<a href="/doctor-patient-write?patId=${patient.id}"><fmt:message key="doctor.add.entry"/></a>
 <br/>
 <br/>
 <p>---> <fmt:message key="patient.record.title" /> <---</p>
-<p c:if="${patient.getRecords().size() == 0}"><fmt:message key="patient.no.records"/></p>
+<c:if test="${patient.records.size() == 0}"><fmt:message key="patient.no.records" /></c:if>
 <c:forEach items="${patient.records}" var="record">
     <p><fmt:message key="patient.record.type" /> ${record.recordType}</p>
     <p><fmt:message key="patient.record.description" /> ${record.description}</p>

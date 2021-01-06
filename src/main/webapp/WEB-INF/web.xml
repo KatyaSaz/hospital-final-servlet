@@ -6,51 +6,6 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
-    <servlet-name>patientPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.PatientController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>patientPage</servlet-name>
-    <url-pattern>/patient</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>doctorPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.DoctorController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>doctorPage</servlet-name>
-    <url-pattern>/doctor</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>doctorShowPatientsPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.DoctorShowPatients</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>doctorShowPatientsPage</servlet-name>
-    <url-pattern>/patients</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>doctorShowOnePatientPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.DoctorOnePatient</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>doctorShowOnePatientPage</servlet-name>
-    <url-pattern>/doc-patient</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>doctorWriteCardPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.DoctorWriteCard</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>doctorWriteCardPage</servlet-name>
-    <url-pattern>/doc-patient-write</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>AdminPage</servlet-name>
     <servlet-class>ua.sazonova.hospital.controller.AdminController</servlet-class>
   </servlet>

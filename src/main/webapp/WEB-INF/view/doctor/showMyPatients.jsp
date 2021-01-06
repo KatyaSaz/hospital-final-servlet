@@ -17,14 +17,14 @@
         </form>
     </div>
     <div class="goBack" style="float:left;">
-        <form action="./doctor?docId=${doctor.id}" method="GET">
+        <form action="/doctor" method="get">
+            <input type="hidden" name="docId" value="${doctor.id}"/>
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>
 </div>
 <br/>
 <br/>
-
 <h3><fmt:message key="doc.show.patients.title"/></h3>
 <form method="POST" action="#">
     <select id="field" name="field">
@@ -39,20 +39,12 @@
     </select>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
-
 <br/>
 <hr/>
-<%--<p c:if="${doctor.patients == 'null'}"><fmt:message key="doctor.no.patients" /></p>--%>
-
+<c:if test="${doctor.patients.size() == 0}"><fmt:message key="doctor.no.patients" /></c:if>
 <c:forEach items="${doctor.patients}" var="patient">
-    <a href="/doc-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
+    <a href="/doctor-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
     <br/>
 </c:forEach>
-
-<%--<div th:each="patient : ${patients}">--%>
-<%--    <a th:href="@{/doctor/patients/{id}(id=${patient.getId()})}"--%>
-<%--       th:text="${patient.getName() + '   ' + patient.getSurname()}">user</a>--%>
-<%--    <br/>--%>
-<%--</div>--%>
 </body>
 </html>

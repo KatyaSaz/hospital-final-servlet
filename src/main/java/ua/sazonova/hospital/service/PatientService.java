@@ -25,4 +25,8 @@ public class PatientService {
     public CardRecord getIdOfCardRecordToSave(String saveCardId){
         return  (saveCardId!=null)? cardRecordDAO.getByID(Integer.valueOf(saveCardId)):null;
     }
+
+    public void createCardRecord(String description, String type, int patId){
+        cardRecordDAO.create(description,type,patId);
+    }
 }

@@ -17,7 +17,8 @@
         </form>
     </div>
     <div class="goBack" style="float:left;">
-        <form action="/doctor?docId=${sessionScope.doctorID}" method="GET">
+        <form action="/doctor" method="GET">
+            <input type="hidden" name="docId" value="${patient.doctor.id}"/>
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>
@@ -27,7 +28,7 @@
 
 <h3><fmt:message key="card.create.title"/></h3>
 
-<form method="post" action="/doc-patient-write" >
+<form method="post" action="/doctor-patient-write" >
     <label for="descrip"><fmt:message key="card.description"/></label>
     <textarea id="descrip" name="description"></textarea>
     <br/>
@@ -38,6 +39,7 @@
         <option value="Diagnosis"><fmt:message key="record.type.diagnosis"/></option>
     </select>
     <br/>
+    <input type="hidden" name="patientId" value="${patient.id}"/>
     <input type="submit" value="<fmt:message key="record.add.button"/>"/>
     <br/>
 </form>
