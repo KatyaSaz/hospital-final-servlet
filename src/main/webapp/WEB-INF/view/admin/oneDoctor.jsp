@@ -29,6 +29,7 @@
 <p><fmt:message key="doctor.experience"/> ${doctor.experience} <fmt:message key="doctor.experience.years"/></p>
 <br/>
 <p>---> <fmt:message key="admin.one.doctor.his.patients"/> <---</p>
+<c:if test="${doctor.patients.size() == 0}"><fmt:message key="doctor.no.patients" /></c:if>
 <c:forEach items="${doctor.patients}" var="patient">
     <p>${patient.name} ${patient.surname}</p>
 </c:forEach>

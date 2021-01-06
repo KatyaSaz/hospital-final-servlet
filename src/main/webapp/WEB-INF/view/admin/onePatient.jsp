@@ -32,8 +32,7 @@
 <br/>
 <br/>
 <p>---> <fmt:message key="patient.record.title" /> <---</p>
-<%--FIX IT--%>
-<%--<p c:if="${patient.records.size() == 0}"><fmt:message key="patient.no.records"/></p>--%>
+<c:if test="${patient.records.size() == 0}"><fmt:message key="patient.no.records"/></c:if>
 <c:forEach items="${patient.records}" var="record">
     <p><fmt:message key="patient.record.type" /> ${record.recordType}</p>
     <p><fmt:message key="patient.record.description" /> ${record.description}</p>
