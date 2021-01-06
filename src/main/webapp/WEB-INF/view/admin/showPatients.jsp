@@ -53,7 +53,6 @@
         <input type="hidden" name="patId" value="${patient.id}"/>
         <button type="submit"><fmt:message key="admin.appoint.button"/></button>
     </form>
-
     <form method="POST" action="/admin-patients">
         <input type="hidden" name="deletePatId" value="${patient.id}"/>
         <input type="submit" value="<fmt:message key="admin.delete.patient.button"/>"/>

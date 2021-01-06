@@ -5,6 +5,8 @@ import ua.sazonova.hospital.entity.enam.DoctorType;
 import java.util.List;
 
 public class Doctor {
+    public static final int DEFAULT_DOCTOR_ID = 103;
+
     private int id;
     private String name;
     private String surname;

@@ -23,8 +23,12 @@ public class AdminAllDoctors extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String deleteId = req.getParameter("deleteDocId");
-        System.out.println("doc_del "+deleteId);
+        System.out.println(deleteId);
+        if(deleteId!=null){
+            adminService.deleteDoctor(deleteId);
+        }
+        resp.sendRedirect("./admin-doctors");
     }
 }

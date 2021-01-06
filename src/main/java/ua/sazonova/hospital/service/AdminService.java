@@ -26,6 +26,10 @@ public class AdminService {
         patientDAO.delete(Integer.valueOf(patId));
     }
 
+    public void deleteDoctor(String docId){
+        doctorDAO.delete(Integer.valueOf(docId));
+    }
+
     public void changeDoctorForPatient(String patId, String newDocId){
         Patient patient = patientDAO.getById(Integer.valueOf(patId));
         patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId)));
