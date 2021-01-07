@@ -16,9 +16,7 @@ public class Patient {
     private User user;
     private List<CardRecord> records;
 
-
     public Patient() {
-
     }
 
     public Patient(int id, String name, String surname, Gender gender, int year, String phone, Doctor doctor, User user, List<CardRecord> records) {
@@ -31,6 +29,15 @@ public class Patient {
         this.doctor = doctor;
         this.user = user;
         this.records = records;
+    }
+
+    public Patient(String name, String surname, Gender gender, int year, String phone, User user){
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.year = year;
+        this.phone = phone;
+        this.user = user;
     }
 
     public int getId() {

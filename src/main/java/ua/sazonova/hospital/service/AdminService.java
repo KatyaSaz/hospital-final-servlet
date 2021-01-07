@@ -26,6 +26,10 @@ public class AdminService {
         doctorDAO.create(doctor);
     }
 
+    public void createPatient(Patient patient){
+        patientDAO.create(patient);
+    }
+
     public void deletePatient(String patId){
         patientDAO.delete(Integer.valueOf(patId));
     }
@@ -34,18 +38,18 @@ public class AdminService {
         doctorDAO.delete(Integer.valueOf(docId));
     }
 
-    public void changeDoctorForPatient(String patId, String newDocId){
-        Patient patient = patientDAO.getById(Integer.valueOf(patId));
-        patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId)));
-        patientDAO.updateDoctor(patient);
-    }
-
     public void makeUserActiveForDoctor(String docId){
         userDAO.makeUserActive(doctorDAO.getUserId(Integer.valueOf(docId)));
     }
 
     public void makeUserActiveForPatient(String patId){
         userDAO.makeUserActive(patientDAO.getUserId(Integer.valueOf(patId)));
+    }
+
+    public void changeDoctorForPatient(String patId, String newDocId){
+        Patient patient = patientDAO.getById(Integer.valueOf(patId));
+        patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId)));
+        patientDAO.updateDoctor(patient);
     }
 
     public List<Doctor> getAllDoctors(){

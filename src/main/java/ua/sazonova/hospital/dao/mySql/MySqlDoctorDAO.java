@@ -74,7 +74,6 @@ public class MySqlDoctorDAO implements DoctorDAO {
                 throwables.printStackTrace();
             }
         }
-
     }
 
     private void changeDoctor(int id){

@@ -19,6 +19,8 @@ public class MySqlPatientDAO implements PatientDAO {
     private  final String UPDATE_DOCTOR_IN_PATIENT = "UPDATE `patients` SET `doc_id`=? WHERE id=?";
     private final String SELECT_USER_ID = "SELECT user_id FROM `patients` WHERE id=?";
     private final String DELETE_PATIENT="DELETE FROM `patients` WHERE id=?";
+    private final String INSERT_PATIENT="INSERT INTO `patients`(`name`, `surname`, `gender`, `year`, `phone`, `doc_id`, `user_id`) VALUES (?,?,?,?,?,?,?)";
+    private final String SELECT_ID_BY_USER_ID = "SELECT `id` FROM `patients` WHERE `user_id`=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -26,8 +28,56 @@ public class MySqlPatientDAO implements PatientDAO {
         this.factoryDAO = factoryDAO;
     }
 
+    private int getIdOfPatientByUserId(int userId, Connection connection) throws SQLException {
+        int patientId = -1;
+        PreparedStatement ps = connection.prepareStatement(SELECT_ID_BY_USER_ID);
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            patientId = rs.getInt("id");
+        }
+        return patientId;
+    }
+
+    private int createPatient(Patient patient, int docID, int userID, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(INSERT_PATIENT);
+        ps.setString(1, patient.getName());
+        ps.setString(2, patient.getSurname());
+        ps.setString(3, patient.getGender().toString());
+        ps.setInt(4, patient.getYear());
+        ps.setString(5, patient.getPhone());
+        ps.setInt(6, docID);
+        ps.setInt(7, userID);
+        ps.execute();
+        ps.close();
+        return getIdOfPatientByUserId(userID, connection);
+    }
+
     @Override
-    public void create(Patient object) {
+    public void create(Patient patient) {
+        Connection connection = factoryDAO.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            int userID = factoryDAO.getUserDAO().create(patient.getUser(), connection);
+            System.out.println("userId: "+userID);
+            int patID = createPatient(patient, Doctor.DEFAULT_DOCTOR_ID, userID, connection);
+            System.out.println("patID: "+patID);
+            factoryDAO.getUserDAO().updateMoreInfoId(userID, patID, connection);
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
 
     }
 

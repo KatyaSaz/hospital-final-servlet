@@ -27,9 +27,9 @@ public class User {
 
     public User(String email, String password, Role role){
         this.email = email;
-        this.password = hashPassword(password);
         this.role = role;
-        this.isActive = false;
+        setPassword(password);
+        setActive(false);
     }
 
     private String hashPassword(String password){

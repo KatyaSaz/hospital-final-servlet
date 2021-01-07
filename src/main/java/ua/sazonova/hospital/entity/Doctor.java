@@ -30,7 +30,6 @@ public class Doctor {
     }
 
     public Doctor(String name, String surname, DoctorType type, int experience, User user){
-        this.id = id;
         this.name = name;
         this.surname = surname;
         this.type = type;

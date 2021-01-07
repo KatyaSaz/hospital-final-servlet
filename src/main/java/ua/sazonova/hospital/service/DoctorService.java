@@ -16,5 +16,4 @@ public class DoctorService {
     public Doctor getDoctorById(String docID){
         return (docID!=null)? doctorDAO.getById(Integer.valueOf(docID)): null;
     }
-
 }
