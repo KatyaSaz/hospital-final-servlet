@@ -74,10 +74,14 @@ public class AdminService {
         return  doctorDAO.findBySameType(doctorType);
     }
 
-
     public List<Doctor> sortDoctors(String field, String direction){
         return doctorDAO.sortDoctors(
                 makeUpSortSelect(Sort.TABLE_DOCTORS, field, direction));
+    }
+
+    public List<Patient> sortPatients(String field, String direction){
+        return patientDAO.sortPatients(
+                makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction));
     }
 
     private String makeUpSortSelect(String tableName, String field, String direction){

@@ -12,5 +12,6 @@ public interface PatientDAO extends SimpleDAO<Patient> {
 //
     List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection connection);
     void updateDoctor(Patient patient);
+    List<Patient> sortPatients(String request);
 
 }

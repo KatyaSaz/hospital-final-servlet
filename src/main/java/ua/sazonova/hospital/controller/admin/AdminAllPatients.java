@@ -24,7 +24,18 @@ public class AdminAllPatients extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String sortField = req.getParameter("sortField");
+        String sortDirection = req.getParameter("sortDirection");
+        if(sortField!=null&&sortDirection!=null){
+            RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_PATIENTS_VIEW);
+            req.setAttribute("patients", adminService.sortPatients(sortField, sortDirection));
+            req.setAttribute("doctors", adminService.getAllDoctors());
+            req.setAttribute("fieldS", sortField);
+            req.setAttribute("directS", sortDirection);
+            rd.forward(req, resp);
+        }
+
         String newDocId = req.getParameter("newDocId");
         String patId = req.getParameter("patId");
         if(newDocId!=null && patId!=null){

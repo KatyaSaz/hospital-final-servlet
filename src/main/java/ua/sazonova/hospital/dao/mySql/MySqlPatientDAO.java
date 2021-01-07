@@ -260,4 +260,29 @@ public class MySqlPatientDAO implements PatientDAO {
         }
         return patients;
     }
+
+    @Override
+    public List<Patient> sortPatients(String request) {
+        List<Patient> patients = new ArrayList<>();
+        Connection connection = factoryDAO.getConnection();
+        try(Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(request)){
+            while(rs.next()){
+                Patient patient =new Patient();
+                patient.setId(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setSurname(rs.getString("surname"));
+                patient.setGender(Gender.valueOf(rs.getString("gender")));
+                patient.setYear(rs.getInt("year"));
+                patient.setPhone(rs.getString("phone"));
+                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+                patient.setDoctor(factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id")));
+                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+                patients.add(patient);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return patients;
+    }
 }

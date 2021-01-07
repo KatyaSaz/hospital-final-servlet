@@ -26,18 +26,18 @@
 <br/>
 
 <h3><fmt:message key="admin.all.patients.list"/></h3>
-<form method="POST" action="#">
-<select id="field" name="field">
-    <option value=""></option>
-    <option value="name" ><fmt:message key="sort.value.name"/></option>
-    <option value="year"><fmt:message key="pat.sort.value.year"/></option>
-</select>
-<select id="direction" name="direction">
-    <option value=""></option>
-    <option value="ASC"><fmt:message key="sort.value.direction.asc"/></option>
-    <option value="DESC"><fmt:message key="sort.value.direction.desc"/></option>
-</select>
-<button type="submit"><fmt:message key="sort.button"/></button>
+<form method="POST" action="/admin-patients">
+    <select id="field" name="sortField">
+        <option value=""></option>
+        <option value="name" <c:if test="${fieldS eq 'name'}">selected</c:if>><fmt:message key="sort.value.name"/></option>
+        <option value="year" <c:if test="${fieldS eq 'year'}">selected</c:if>><fmt:message key="pat.sort.value.year"/></option>
+    </select>
+    <select id="direction" name="sortDirection">
+        <option value=""></option>
+        <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
+        <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
+    </select>
+    <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 
 <c:forEach items="${patients}" var="patient">
