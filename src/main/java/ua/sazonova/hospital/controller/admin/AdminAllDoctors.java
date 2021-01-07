@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.admin;
 
+import ua.sazonova.hospital.constants.Sort;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 import ua.sazonova.hospital.service.AdminService;
@@ -36,6 +37,17 @@ public class AdminAllDoctors extends HttpServlet {
         if(searchType!=null){
             RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_DOCTORS_VIEW);
             req.setAttribute("doctors", adminService.getAllDoctorsBySameType(DoctorType.valueOf(searchType)));
+            req.setAttribute("typeDoc", searchType);
+            rd.forward(req, resp);
+        }
+
+        String sortField = req.getParameter("sortField");
+        String sortDirection = req.getParameter("sortDirection");
+        if(sortField!=null&&sortDirection!=null){
+            RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_DOCTORS_VIEW);
+            req.setAttribute("doctors", adminService.sortDoctors(sortField, sortDirection));
+            req.setAttribute("fieldS", sortField);
+            req.setAttribute("directS", sortDirection);
             rd.forward(req, resp);
         }
     }

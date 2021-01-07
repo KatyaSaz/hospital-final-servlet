@@ -26,16 +26,16 @@
 <br/>
 <h3><fmt:message key="admin.all.doctors.title"/></h3>
 
-<form method="POST" action="#">
-    <select id="field" name="field">
+<form method="POST" action="/admin-doctors">
+    <select id="field" name="sortField">
         <option value=""></option>
-        <option value="name" ><fmt:message key="sort.value.name"/></option>
-        <option value="experience"><fmt:message key="doc.sort.value.experience"/></option>
+        <option value="name" <c:if test="${fieldS eq 'name'}">selected</c:if>><fmt:message key="sort.value.name"/></option>
+        <option value="experience" <c:if test="${fieldS eq 'experience'}">selected</c:if>><fmt:message key="doc.sort.value.experience"/></option>
     </select>
-    <select id="direction" name="direction">
+    <select id="direction" name="sortDirection">
         <option value=""></option>
-        <option value="ASC"><fmt:message key="sort.value.direction.asc"/></option>
-        <option value="DESC" ><fmt:message key="sort.value.direction.desc"/></option>
+        <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
+        <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
@@ -43,10 +43,10 @@
 <form method="POST" action="/admin-doctors">
     <select id="type" name="searchType">
         <option value=""></option>
-        <option value="dermatologist"><fmt:message key="doc.type.dermatologist"/></option>
-        <option value="pediatrician"><fmt:message key="doc.type.pediatrician"/></option>
-        <option value="surgeon"><fmt:message key="doc.type.surgeon"/></option>
-        <option value="optometrist"><fmt:message key="doc.type.optometrist"/></option>
+        <option value="dermatologist" <c:if test="${typeDoc eq 'dermatologist'}">selected</c:if>><fmt:message key="doc.type.dermatologist"/></option>
+        <option value="pediatrician" <c:if test="${typeDoc eq 'pediatrician'}">selected</c:if>><fmt:message key="doc.type.pediatrician"/></option>
+        <option value="surgeon" <c:if test="${typeDoc eq 'surgeon'}">selected</c:if>><fmt:message key="doc.type.surgeon"/></option>
+        <option value="optometrist" <c:if test="${typeDoc eq 'optometrist'}">selected</c:if>><fmt:message key="doc.type.optometrist"/></option>
     </select>
     <button type="submit"><fmt:message key="doc.find.button"/></button>
 </form>

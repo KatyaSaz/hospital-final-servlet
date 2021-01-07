@@ -234,4 +234,30 @@ public class MySqlDoctorDAO implements DoctorDAO {
         }
         return doctors;
     }
+
+    @Override
+    public List<Doctor> sortDoctors(String request) {
+        List<Doctor> doctors = new ArrayList<>();
+        Connection connection = factoryDAO.getConnection();
+        try(Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(request)){
+            while(rs.next()){
+                Doctor doctor = new Doctor();
+                doctor.setId(rs.getInt("id"));
+                doctor.setName(rs.getString("name"));
+                doctor.setSurname(rs.getString("surname"));
+                doctor.setType(DoctorType.valueOf(rs.getString("type")));
+                doctor.setExperience(rs.getInt("experience"));
+                doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+                doctors.add(doctor);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return doctors;
+    }
 }

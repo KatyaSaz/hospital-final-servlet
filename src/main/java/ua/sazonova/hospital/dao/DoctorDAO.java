@@ -10,5 +10,6 @@ public interface DoctorDAO extends SimpleDAO<Doctor>{
 
 //    void create(Doctor doctor, User user);
     List<Doctor> findBySameType(DoctorType doctorType);
+    List<Doctor> sortDoctors(String request);
 
 }

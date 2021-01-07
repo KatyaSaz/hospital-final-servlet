@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.service;
 
+import ua.sazonova.hospital.constants.Sort;
 import ua.sazonova.hospital.dao.DoctorDAO;
 import ua.sazonova.hospital.dao.FactoryDAO;
 import ua.sazonova.hospital.dao.PatientDAO;
@@ -71,5 +72,15 @@ public class AdminService {
 
     public List<Doctor> getAllDoctorsBySameType(DoctorType doctorType){
         return  doctorDAO.findBySameType(doctorType);
+    }
+
+
+    public List<Doctor> sortDoctors(String field, String direction){
+        return doctorDAO.sortDoctors(
+                makeUpSortSelect(Sort.TABLE_DOCTORS, field, direction));
+    }
+
+    private String makeUpSortSelect(String tableName, String field, String direction){
+        return "SELECT * FROM `"+tableName+"` ORDER BY `"+field+"` "+direction;
     }
 }
