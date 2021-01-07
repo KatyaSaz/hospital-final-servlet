@@ -26,23 +26,24 @@
 <br/>
 <br/>
 <h3><fmt:message key="doc.show.patients.title"/></h3>
-<form method="POST" action="#">
-    <select id="field" name="field">
+<form method="POST" action="/doctor-patients">
+    <select id="field" name="sortField">
         <option value=""></option>
-        <option value="name" ><fmt:message key="sort.value.name"/></option>
-        <option value="year"><fmt:message key="pat.sort.value.year"/></option>
+        <option value="name" <c:if test="${fieldS eq 'name'}">selected</c:if>><fmt:message key="sort.value.name"/></option>
+        <option value="year" <c:if test="${fieldS eq 'year'}">selected</c:if>><fmt:message key="pat.sort.value.year"/></option>
     </select>
-    <select id="direction" name="direction">
+    <select id="direction" name="sortDirection">
         <option value=""></option>
-        <option value="ASC"><fmt:message key="sort.value.direction.asc"/></option>
-        <option value="DESC"><fmt:message key="sort.value.direction.desc"/></option>
+        <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
+        <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>
+    <input type="hidden" name="docID" value="${doctor.id}"/>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 <br/>
 <hr/>
-<c:if test="${doctor.patients.size() == 0}"><fmt:message key="doctor.no.patients" /></c:if>
-<c:forEach items="${doctor.patients}" var="patient">
+<c:if test="${patients.size() == 0}"><fmt:message key="doctor.no.patients" /></c:if>
+<c:forEach items="${patients}" var="patient">
     <a href="/doctor-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
     <br/>
 </c:forEach>

@@ -236,6 +236,18 @@ public class MySqlPatientDAO implements PatientDAO {
 
 
     @Override
+    public List<Patient> getPatientsForDoctorService(Doctor doctor){
+        Connection connection = factoryDAO.getConnection();
+        List<Patient> patients = getPatientsOfOneDoctor(doctor, connection);
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return patients;
+    }
+
+    @Override
     public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection conn) {
         List<Patient> patients = new ArrayList<>();
         try(PreparedStatement ps = conn.prepareStatement(SELECT_PATIENTS_OF_ONE_DOCTOR)){
@@ -282,7 +294,42 @@ public class MySqlPatientDAO implements PatientDAO {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return patients;
     }
+
+//    @Override
+//    public List<Patient> sortPatientsOfOneDoctor(int id, String request) {
+//        Connection connection = factoryDAO.getConnection();
+//        List<Patient> patients = new ArrayList<>();
+//        try(PreparedStatement ps = connection.prepareStatement(request)){
+//            ps.setInt(1, id);
+//            ResultSet rs = ps.executeQuery();
+//            while(rs.next()){
+//                Patient patient =new Patient();
+//                patient.setId(rs.getInt("id"));
+//                patient.setName(rs.getString("name"));
+//                patient.setSurname(rs.getString("surname"));
+//                patient.setGender(Gender.valueOf(rs.getString("gender")));
+//                patient.setYear(rs.getInt("year"));
+//                patient.setPhone(rs.getString("phone"));
+//                patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+//                patient.setDoctor(factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id")));
+//                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+//                patients.add(patient);
+//            }
+//            rs.close();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }try {
+//            connection.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return patients;
+//    }
 }
