@@ -3,6 +3,7 @@ package ua.sazonova.hospital.entity;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 
 import java.util.List;
+import java.util.function.DoublePredicate;
 
 public class Doctor {
     public static final int DEFAULT_DOCTOR_ID = 103;
@@ -25,6 +26,15 @@ public class Doctor {
         this.type = type;
         this.experience = experience;
         this.patients = patients;
+        this.user = user;
+    }
+
+    public Doctor(String name, String surname, DoctorType type, int experience, User user){
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.type = type;
+        this.experience = experience;
         this.user = user;
     }
 

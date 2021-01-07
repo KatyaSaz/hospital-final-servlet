@@ -10,9 +10,11 @@ public class MySqlUserDAO implements UserDAO {
     private final String SELECT_USER_BY_EMAIL="SELECT * FROM `users` WHERE email=?";
     private final String SELECT_USER_BY_ID="SELECT * FROM `users` WHERE id=?";
     private final String SELECT_ADMIN="SELECT * FROM `users` WHERE role='ADMIN'";
-    private final String INSERT_USER="";
+    private final String INSERT_USER="INSERT INTO `users`(`email`, `password`, `role`, `is_active`) VALUES (?,?,?,?)";
     private  final String UPDATE_USER_ACTIVE = "UPDATE `users` SET `is_active`=? WHERE id=?";
+    private final String UPDATE_USER_MORE_INFO_ID = "UPDATE `users` SET `more_info_id`=? WHERE `id`=?";
     private final String DELETE_USER= "DELETE FROM `users` WHERE id=?";
+    private final String SELECT_USER_ID_BY_EMAIL = "SELECT `id` FROM `users` WHERE `email`=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -20,15 +22,43 @@ public class MySqlUserDAO implements UserDAO {
         this.factoryDAO = factoryDAO;
     }
 
-    @Override
-    public void create(User user) {
 
+    private int getIdOfUserByEmail(String email, Connection connection) throws SQLException {
+        int userId = -1;
+        PreparedStatement ps = connection.prepareStatement(SELECT_USER_ID_BY_EMAIL);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            userId = rs.getInt("id");
+        }
+        return userId;
+    }
+
+    @Override
+    public int create(User user, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(INSERT_USER);
+        ps.setString(1, user.getEmail());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getRole().toString());
+        ps.setBoolean(4, user.isActive());
+        ps.execute();
+        ps.close();
+        return getIdOfUserByEmail(user.getEmail(), connection);
     }
 
     @Override
     public void delete(int id, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(DELETE_USER);
         ps.setInt(1, id);
+        ps.execute();
+        ps.close();
+    }
+
+    @Override
+    public void updateMoreInfoId(int id, int moreId, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(UPDATE_USER_MORE_INFO_ID);
+        ps.setInt(1, moreId);
+        ps.setInt(2, id);
         ps.execute();
         ps.close();
     }

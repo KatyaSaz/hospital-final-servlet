@@ -22,6 +22,10 @@ public class AdminService {
         userDAO = FactoryDAO.getInstance(MY_SQL).getUserDAO();
     }
 
+    public void createDoctor(Doctor doctor){
+        doctorDAO.create(doctor);
+    }
+
     public void deletePatient(String patId){
         patientDAO.delete(Integer.valueOf(patId));
     }
