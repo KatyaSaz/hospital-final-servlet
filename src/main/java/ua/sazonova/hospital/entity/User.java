@@ -23,6 +23,13 @@ public class User {
         this.idMoreInfo = idMoreInfo;
     }
 
+    public User(String email, String password, Role role){
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.isActive = false;
+    }
+
     public int getId() {
         return id;
     }

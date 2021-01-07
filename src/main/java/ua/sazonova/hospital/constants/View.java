@@ -14,4 +14,9 @@ public interface View {
     String ADMIN_NON_REG_VIEW = "WEB-INF/view/admin/showNonReg.jsp";
     String ADMIN_ONE_DOCTOR_VIEW="WEB-INF/view/admin/oneDoctor.jsp";
     String ADMIN_ONE_PATIENT_VIEW="WEB-INF/view/admin/onePatient.jsp";
+
+    String REG_USER_VIEW = "WEB-INF/view/registration/userReg.jsp";
+    String REG_DOCTOR_VIEW = "WEB-INF/view/registration/doctorReg.jsp";
+    String REG_PATIENT_VIEW= "WEB-INF/view/registration/patientReg.jsp";
+    String REG_SUCCESS_VIEW = "WEB-INF/view/registration/success.jsp";
 }
