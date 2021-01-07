@@ -1,5 +1,7 @@
 package ua.sazonova.hospital.controller;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(LOGIN_FORM);
+//        boolean isPasswordValid = BCrypt.checkpw(password, hashPassword);
         rd.forward(req, resp);
     }
 

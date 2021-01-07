@@ -1,8 +1,10 @@
 package ua.sazonova.hospital.entity;
 
+import org.mindrot.jbcrypt.BCrypt;
 import ua.sazonova.hospital.entity.enam.Role;
 
 public class User {
+    private static int ENCODING_STRENGTH = 12;
 
     private int id;
     private String email;
@@ -25,9 +27,13 @@ public class User {
 
     public User(String email, String password, Role role){
         this.email = email;
-        this.password = password;
+        this.password = hashPassword(password);
         this.role = role;
         this.isActive = false;
+    }
+
+    private String hashPassword(String password){
+        return BCrypt.hashpw(password, BCrypt.gensalt(ENCODING_STRENGTH));
     }
 
     public int getId() {
@@ -51,7 +57,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = hashPassword(password);
     }
 
     public Role getRole() {
@@ -61,10 +67,6 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
-//    public void setRole(String role) {
-//        this.role = new Role(role);
-//    }
 
     public boolean isActive() {
         return isActive;
@@ -93,12 +95,5 @@ public class User {
                 ", idMoreInfo=" + idMoreInfo +
                 '}';
     }
-
-
-
-    //    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(ENCODING_STRENGTH);
-//        this.password = bcrypt.encode(password);
-
-
 
 }
