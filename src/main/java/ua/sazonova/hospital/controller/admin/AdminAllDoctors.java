@@ -1,6 +1,7 @@
 package ua.sazonova.hospital.controller.admin;
 
 import ua.sazonova.hospital.constants.View;
+import ua.sazonova.hospital.entity.enam.DoctorType;
 import ua.sazonova.hospital.service.AdminService;
 
 import javax.servlet.RequestDispatcher;
@@ -23,12 +24,19 @@ public class AdminAllDoctors extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String deleteId = req.getParameter("deleteDocId");
         System.out.println(deleteId);
         if(deleteId!=null){
             adminService.deleteDoctor(deleteId);
+            resp.sendRedirect("./admin-doctors");
         }
-        resp.sendRedirect("./admin-doctors");
+
+        String searchType = req.getParameter("searchType");
+        if(searchType!=null){
+            RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_DOCTORS_VIEW);
+            req.setAttribute("doctors", adminService.getAllDoctorsBySameType(DoctorType.valueOf(searchType)));
+            rd.forward(req, resp);
+        }
     }
 }

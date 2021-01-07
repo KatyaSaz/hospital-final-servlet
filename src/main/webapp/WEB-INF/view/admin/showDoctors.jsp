@@ -40,8 +40,8 @@
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 
-<form method="POST" action="#">
-    <select id="type" name="type">
+<form method="POST" action="/admin-doctors">
+    <select id="type" name="searchType">
         <option value=""></option>
         <option value="dermatologist"><fmt:message key="doc.type.dermatologist"/></option>
         <option value="pediatrician"><fmt:message key="doc.type.pediatrician"/></option>

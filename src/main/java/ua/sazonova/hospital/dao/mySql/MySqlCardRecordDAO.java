@@ -14,10 +14,9 @@ import java.util.List;
 
 public class MySqlCardRecordDAO implements CardRecordDAO {
     private final String SELECT_RECORD_BY_ID = "SELECT * FROM `card_records` WHERE id=?";
-
-   // private final String SELECT_RECORD_OF_ONE_PATIENT="SELECT * FROM `card_records` WHERE pat_id=?";
     private final String INSERT_RECORD="INSERT INTO `card_records`(`description`, `record_type`, `pat_id`) VALUES (?,?,?)";
     private final String DELETE_RECORD_OF_ONE_PATIENT = "DELETE FROM `card_records` WHERE pat_id=?";
+
     private MySqlFactoryDAO factoryDAO;
 
     public MySqlCardRecordDAO(MySqlFactoryDAO factoryDAO) {
@@ -27,7 +26,7 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
     @Override
     public void create(String description, String type, int patId) {
         Connection connection = factoryDAO.getConnection();
-        try(PreparedStatement ps=connection.prepareStatement(INSERT_RECORD);){
+        try(PreparedStatement ps=connection.prepareStatement(INSERT_RECORD)){
             ps.setString(1, description);
             ps.setString(2, type);
             ps.setInt(3, patId);
@@ -66,8 +65,6 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
                 cardRecord.setRecordType(RecordType.valueOf(rs.getString("record_type")));
                 cardRecord.setDescription(rs.getString("description"));
                 cardRecord.setPatient(factoryDAO.getPatientDAO().getById(rs.getInt("pat_id")));
-
-                //TODO getPatient fields
             }
             rs.close();
         }catch (SQLException exc){

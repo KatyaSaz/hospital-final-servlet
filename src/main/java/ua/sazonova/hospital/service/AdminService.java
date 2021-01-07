@@ -6,6 +6,7 @@ import ua.sazonova.hospital.dao.PatientDAO;
 import ua.sazonova.hospital.dao.UserDAO;
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
+import ua.sazonova.hospital.entity.enam.DoctorType;
 
 import java.util.List;
 
@@ -66,5 +67,9 @@ public class AdminService {
 
     public List<Patient> getNonActivePatients(){
         return patientDAO.getNonActive();
+    }
+
+    public List<Doctor> getAllDoctorsBySameType(DoctorType doctorType){
+        return  doctorDAO.findBySameType(doctorType);
     }
 }

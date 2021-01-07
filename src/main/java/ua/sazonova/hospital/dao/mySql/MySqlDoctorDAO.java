@@ -20,6 +20,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
     private final String DELETE_DOCTOR="DELETE FROM `doctors` WHERE id=?";
     private final String INSERT_DOCTOR="INSERT INTO `doctors`(`name`, `surname`, `type`, `experience`, `user_id`) VALUES (?,?,?,?,?)";
     private final String SELECT_ID_BY_USER_ID = "SELECT `id` FROM `doctors` WHERE `user_id`=?";
+    private final String SELECT_ALL_BY_ONE_TYPE ="SELECT * FROM `doctors` WHERE `type`=?";
     private MySqlFactoryDAO factoryDAO;
 
     public MySqlDoctorDAO(MySqlFactoryDAO factoryDAO) {
@@ -196,6 +197,34 @@ public class MySqlDoctorDAO implements DoctorDAO {
                 doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
                 doctors.add(doctor);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return doctors;
+    }
+
+    @Override
+    public List<Doctor> findBySameType(DoctorType doctorType) {
+        List<Doctor> doctors = new ArrayList<>();
+        Connection connection = factoryDAO.getConnection();
+        try(PreparedStatement ps = connection.prepareStatement(SELECT_ALL_BY_ONE_TYPE)){
+            ps.setString(1, doctorType.toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Doctor doctor = new Doctor();
+                doctor.setId(rs.getInt("id"));
+                doctor.setName(rs.getString("name"));
+                doctor.setSurname(rs.getString("surname"));
+                doctor.setType(DoctorType.valueOf(rs.getString("type")));
+                doctor.setExperience(rs.getInt("experience"));
+                doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
+                doctors.add(doctor);
+            }
+            rs.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }try {
