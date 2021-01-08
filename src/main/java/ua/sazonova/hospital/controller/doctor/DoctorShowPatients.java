@@ -2,6 +2,7 @@ package ua.sazonova.hospital.controller.doctor;
 
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.Doctor;
+import ua.sazonova.hospital.service.AdminService;
 import ua.sazonova.hospital.service.DoctorService;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import java.io.IOException;
 @WebServlet("/doctor-patients")
 public class DoctorShowPatients extends HttpServlet {
     private DoctorService doctorService = new DoctorService();
+    private AdminService adminService = new AdminService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,11 +35,10 @@ public class DoctorShowPatients extends HttpServlet {
         String sortDirection = req.getParameter("sortDirection");
         if(sortField!= null && sortDirection!=null){
             RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_HIS_PATIENTS_VIEW);
-            Doctor doctor= doctorService.getDoctorById(docID);
+            Doctor doctor = doctorService.getDoctorById(docID);
             req.setAttribute("doctor", doctor);
             req.setAttribute("patients",
-                    doctorService.sortPatients(docID, sortField, sortDirection));
-            //req.setAttribute("doctor", doctorService.getDoctorById(docID));
+                    adminService.sortPatientsOfOneDoctor(docID, sortField, sortDirection));
             req.setAttribute("fieldS", sortField);
             req.setAttribute("directS", sortDirection);
             rd.forward(req, resp);

@@ -29,13 +29,4 @@ public class DoctorService {
     public List<Patient> getPatientsOfDoctor(Doctor doctor){
         return patientDAO.getPatientsForDoctorService(doctor);
     }
-
-    public List<Patient> sortPatients(String doc_id, String field, String direction){
-        return patientDAO.sortPatients(makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction, doc_id));
-    }
-
-
-    private String makeUpSortSelect(String tableName, String field, String direction, String doc_id){
-        return "SELECT * FROM `"+tableName+"` WHERE doc_id="+doc_id+" ORDER BY `"+field+"` "+direction;
-    }
 }

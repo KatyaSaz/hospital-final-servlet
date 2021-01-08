@@ -76,15 +76,21 @@ public class AdminService {
 
     public List<Doctor> sortDoctors(String field, String direction){
         return doctorDAO.sortDoctors(
-                makeUpSortSelect(Sort.TABLE_DOCTORS, field, direction));
+                makeUpSortSelect(Sort.TABLE_DOCTORS, field, direction, null));
     }
 
     public List<Patient> sortPatients(String field, String direction){
         return patientDAO.sortPatients(
-                makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction));
+                makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction, null));
     }
 
-    private String makeUpSortSelect(String tableName, String field, String direction){
-        return "SELECT * FROM `"+tableName+"` ORDER BY `"+field+"` "+direction;
+    public List<Patient> sortPatientsOfOneDoctor(String doc_id, String field, String direction){
+        return patientDAO.sortPatients(makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction, doc_id));
+    }
+
+    private String makeUpSortSelect(String tableName, String field, String direction, String doc_id){
+        return (doc_id!=null)?
+                ("SELECT * FROM `"+tableName+"` WHERE doc_id="+doc_id+" ORDER BY `"+field+"` "+direction):
+                ("SELECT * FROM `"+tableName+"` ORDER BY `"+field+"` "+direction);
     }
 }
