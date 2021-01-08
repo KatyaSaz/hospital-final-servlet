@@ -29,7 +29,6 @@ public class User {
         this.email = email;
         this.role = role;
         this.password = password;
-       // setPassword(password);
         setActive(false);
     }
 
@@ -59,7 +58,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password=password;
-      //  this.password = hashPassword(password);
     }
 
     public Role getRole() {
