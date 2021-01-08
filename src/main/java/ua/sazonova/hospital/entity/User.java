@@ -4,7 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import ua.sazonova.hospital.entity.enam.Role;
 
 public class User {
-    private static int ENCODING_STRENGTH = 12;
+   // private static int ENCODING_STRENGTH = 12;
 
     private int id;
     private String email;
@@ -28,12 +28,13 @@ public class User {
     public User(String email, String password, Role role){
         this.email = email;
         this.role = role;
-        setPassword(password);
+        this.password = password;
+       // setPassword(password);
         setActive(false);
     }
 
     private String hashPassword(String password){
-        return BCrypt.hashpw(password, BCrypt.gensalt(ENCODING_STRENGTH));
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public int getId() {
@@ -57,7 +58,8 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = hashPassword(password);
+        this.password=password;
+      //  this.password = hashPassword(password);
     }
 
     public Role getRole() {

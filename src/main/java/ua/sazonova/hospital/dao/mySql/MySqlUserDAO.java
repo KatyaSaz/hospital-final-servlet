@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.dao.mySql;
 
+import org.mindrot.jbcrypt.BCrypt;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
 import ua.sazonova.hospital.dao.UserDAO;
@@ -38,7 +39,7 @@ public class MySqlUserDAO implements UserDAO {
     public int create(User user, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(INSERT_USER);
         ps.setString(1, user.getEmail());
-        ps.setString(2, user.getPassword());
+        ps.setString(2, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         ps.setString(3, user.getRole().toString());
         ps.setBoolean(4, user.isActive());
         ps.execute();
