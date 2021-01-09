@@ -17,12 +17,12 @@ public class PatientService {
         cardRecordDAO = FactoryDAO.getInstance(MY_SQL).getCardRecordDAO();
     }
 
-    public Patient getPatientById(String patientId){
-        return (patientId!=null)? patientDAO.getById(Integer.valueOf(patientId)): null;
+    public Patient getPatientById(String patientId, String lang){
+        return (patientId!=null)? patientDAO.getById(Integer.valueOf(patientId), lang): null;
     }
 
-    public CardRecord getIdOfCardRecordToSave(String saveCardId){
-        return  (saveCardId!=null)? cardRecordDAO.getByID(Integer.valueOf(saveCardId)):null;
+    public CardRecord getIdOfCardRecordToSave(String saveCardId, String lang){
+        return  (saveCardId!=null)? cardRecordDAO.getByID(Integer.valueOf(saveCardId), lang):null;
     }
 
     public void createCardRecord(String description, String type, int patId){

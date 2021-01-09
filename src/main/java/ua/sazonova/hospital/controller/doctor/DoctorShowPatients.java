@@ -5,6 +5,7 @@ import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.service.AdminService;
 import ua.sazonova.hospital.service.DoctorService;
+import ua.sazonova.hospital.service.Local;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +24,9 @@ public class DoctorShowPatients extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_HIS_PATIENTS_VIEW);
         String docID = req.getParameter(Const.DOCTOR_ID);
-        Doctor doctor= doctorService.getDoctorById(docID);
+        Doctor doctor= doctorService.getDoctorById(docID, Local.getLanguage(req));
         req.setAttribute(Const.DOCTOR, doctor);
-        req.setAttribute(Const.PATIENTS, doctorService.getPatientsOfDoctor(doctor));
+        req.setAttribute(Const.PATIENTS, doctorService.getPatientsOfDoctor(doctor, Local.getLanguage(req)));
         rd.forward(req, resp);
     }
 
@@ -36,7 +37,7 @@ public class DoctorShowPatients extends HttpServlet {
         String sortDirection = req.getParameter(Const.SORT_DIRECTION);
         if(sortField!= null && sortDirection!=null){
             RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_HIS_PATIENTS_VIEW);
-            Doctor doctor = doctorService.getDoctorById(docID);
+            Doctor doctor = doctorService.getDoctorById(docID, Local.getLanguage(req));
             req.setAttribute(Const.DOCTOR, doctor);
             req.setAttribute(Const.PATIENTS,
                     adminService.sortPatientsOfOneDoctor(docID, sortField, sortDirection));

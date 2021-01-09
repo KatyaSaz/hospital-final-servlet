@@ -6,6 +6,7 @@ import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
 import ua.sazonova.hospital.service.AuthorizationService;
+import ua.sazonova.hospital.service.Local;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,9 +41,9 @@ public class LoginController extends HttpServlet {
                 if (BCrypt.checkpw(password, user.getPassword())) {
                     req.getSession().setAttribute(Const.USER, user);
                     if (user.getRole().equals(Role.DOCTOR)) {
-                        resp.sendRedirect("/doctor?"+Const.DOCTOR_ID+"=" + user.getIdMoreInfo());
+                        resp.sendRedirect("/doctor?"+Const.DOCTOR_ID+"=" + user.getIdMoreInfo()+"&sessionLocale="+ Local.getLanguage(req));
                     } else if (user.getRole().equals(Role.PATIENT)) {
-                        resp.sendRedirect("/patient?"+Const.PATIENT_ID+"=" + user.getIdMoreInfo());
+                        resp.sendRedirect("/patient?"+Const.PATIENT_ID+"=" + user.getIdMoreInfo()+"&sessionLocale="+ Local.getLanguage(req));
                     } else if (user.getRole().equals(Role.ADMIN)) {
                         resp.sendRedirect("/admin");
                     }else if(!user.isActive()){

@@ -3,6 +3,7 @@ package ua.sazonova.hospital.controller.admin;
 import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.service.AdminService;
+import ua.sazonova.hospital.service.Local;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class AdminAllPatients extends HttpServlet {
         String newDocId = req.getParameter(Const.NEW_DOCTOR_ID);
         String patId = req.getParameter(Const.PATIENT_ID);
         if (newDocId != null && patId != null) {
-            adminService.changeDoctorForPatient(patId, newDocId);
+            adminService.changeDoctorForPatient(patId, newDocId, Local.getLanguage(req));
         }
         String deletePatId = req.getParameter(Const.DELETE_PATIENT_ID);
         if (deletePatId != null) {

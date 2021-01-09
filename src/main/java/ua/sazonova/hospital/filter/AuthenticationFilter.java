@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 //"/doctor"
+//"/patient"
 @WebFilter(filterName = "authenticationFilter",
-        urlPatterns = {"/patient",  "/doctor-patients", "/doctor-patient", "/doctor-patient-write",
+        urlPatterns = {  "/doctor-patients", "/doctor-patient", "/doctor-patient-write",
         "/admin", "/admin-patients", "/admin-patient", "/admin-doctors", "/admin-doctor", "/admin-non-reg"})
 public class AuthenticationFilter implements Filter {
 

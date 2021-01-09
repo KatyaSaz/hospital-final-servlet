@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.dao.mySql;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
@@ -135,7 +136,7 @@ public class MySqlPatientDAO implements PatientDAO {
     }
 
     @Override
-    public Patient getById(int id) {
+    public Patient getById(int id, String lang) {
         Connection connection = factoryDAO.getConnection();
         Patient patient = null;
         try(PreparedStatement ps = connection.prepareStatement(SELECT_PATIENT_BY_ID)){
@@ -144,8 +145,14 @@ public class MySqlPatientDAO implements PatientDAO {
             while(rs.next()){
                 patient = new Patient();
                 patient.setId(rs.getInt("pat.id"));
-                patient.setName(rs.getString("pat.name"));
-                patient.setSurname(rs.getString("pat.surname"));
+                patient.setName(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "pat.name_ru": "pat.name"));
+                patient.setSurname(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "pat.surname_ru": "pat.surname"));
+//                patient.setName(rs.getString("pat.name"));
+//                patient.setSurname(rs.getString("pat.surname"));
                 patient.setGender(Gender.valueOf(rs.getString("gender")));
                 patient.setYear(rs.getInt("year"));
                 patient.setPhone(rs.getString("phone"));
@@ -153,13 +160,19 @@ public class MySqlPatientDAO implements PatientDAO {
 
                 Doctor doctor = new Doctor();
                 doctor.setId(rs.getInt("doc.id"));
-                doctor.setName(rs.getString("doc.name"));
-                doctor.setSurname(rs.getString("doc.surname"));
+                doctor.setName(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "doc.name_ru": "doc.name"));
+                doctor.setSurname(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "doc.surname_ru": "doc.surname"));
+//                doctor.setName(rs.getString("doc.name"));
+//                doctor.setSurname(rs.getString("doc.surname"));
                 doctor.setType(DoctorType.valueOf(rs.getString("type")));
                 doctor.setExperience(rs.getInt("experience"));
                 doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("doc.user_id"), connection));
                 patient.setDoctor(doctor);
-                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+                patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection, lang));
             }
             rs.close();
         } catch (SQLException throwables) {
@@ -174,29 +187,49 @@ public class MySqlPatientDAO implements PatientDAO {
         return patient;
     }
 
-    private Patient seUpPatientInfo(ResultSet rs, Connection connection, Doctor doctor) throws SQLException {
+    @Override
+    public List<Patient> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<Patient> getNonActive() {
+        return null;
+    }
+
+    @Override
+    public List<Patient> sort(String request) {
+        return null;
+    }
+
+    private Patient seUpPatientInfo(ResultSet rs, Connection connection, Doctor doctor, String lang) throws SQLException {
         Patient patient = new Patient();
         patient.setId(rs.getInt("id"));
-        patient.setName(rs.getString("name"));
-        patient.setSurname(rs.getString("surname"));
+        patient.setName(
+                rs.getString(
+                        (lang.equals(Const.RU))? "name_ru": "name"));
+        patient.setSurname(
+                rs.getString(
+                        (lang.equals(Const.RU))? "surname_ru": "surname"));
         patient.setGender(Gender.valueOf(rs.getString("gender")));
         patient.setYear(rs.getInt("year"));
         patient.setPhone(rs.getString("phone"));
         patient.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
         patient.setDoctor(
-                (doctor!=null)? doctor:
-                factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id")));
-        patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection));
+                (doctor!=null)?
+                doctor:
+                factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id"), lang));
+        patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection, lang));
         return patient;
     }
 
-    private List<Patient> getPatientsByRequest(String request){
+    private List<Patient> getPatientsByRequest(String request, String lang){
         List<Patient> patients = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(SELECT_ALL)){
             while(rs.next()){
-                patients.add(seUpPatientInfo(rs, connection, null));
+                patients.add(seUpPatientInfo(rs, connection, null, lang));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -209,28 +242,54 @@ public class MySqlPatientDAO implements PatientDAO {
     }
 
     @Override
-    public List<Patient> getAll() {
-        return  getPatientsByRequest(SELECT_ALL);
+    public Patient changeLanguage(String lang, Patient patient, Connection connection) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_PATIENT_BY_ID)) {
+            ps.setInt(1, patient.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                patient.setName(
+                        rs.getString(
+                                (lang.equals(Const.RU)) ? "name_ru" : "name"));
+                patient.setSurname(
+                        rs.getString(
+                                (lang.equals(Const.RU)) ? "surname_ru" : "surname"));
+
+                patient.getDoctor().setName(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "doc.name_ru": "doc.name"));
+                patient.getDoctor().setSurname(
+                        rs.getString(
+                                (lang.equals(Const.RU))? "doc.surname_ru": "doc.surname"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return patient;
     }
+//
+//    @Override
+//    public List<Patient> getAll() {
+//        return  getPatientsByRequest(SELECT_ALL, lang);
+//    }
+//
+//    @Override
+//    public List<Patient> getNonActive() {
+//        return getPatientsByRequest(SELECT_NON_REGISTER, lang);
+//    }
+//
+//    @Override
+//    public List<Patient> sort(String request) {
+//        return getPatientsByRequest(request);
+//    }
 
     @Override
-    public List<Patient> getNonActive() {
-        return getPatientsByRequest(SELECT_NON_REGISTER);
-    }
-
-    @Override
-    public List<Patient> sort(String request) {
-        return getPatientsByRequest(request);
-    }
-
-    @Override
-    public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection connection) {
+    public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection connection, String lang) {
         List<Patient> patients = new ArrayList<>();
         try(PreparedStatement ps = connection.prepareStatement(SELECT_PATIENTS_OF_ONE_DOCTOR)){
             ps.setInt(1, doctor.getId());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                patients.add(seUpPatientInfo(rs, connection, doctor));
+                patients.add(seUpPatientInfo(rs, connection, doctor, lang));
             }
             rs.close();
         } catch (SQLException throwables) {
@@ -240,9 +299,9 @@ public class MySqlPatientDAO implements PatientDAO {
     }
 
     @Override
-    public List<Patient> getPatientsForDoctorService(Doctor doctor){
+    public List<Patient> getPatientsForDoctorService(Doctor doctor, String lang){
         Connection connection = factoryDAO.getConnection();
-        List<Patient> patients = getPatientsOfOneDoctor(doctor, connection);
+        List<Patient> patients = getPatientsOfOneDoctor(doctor, connection, lang);
         try {
             connection.close();
         } catch (SQLException throwables) {

@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.dao.mySql;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.RecordType;
@@ -52,27 +53,29 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
         ps.close();
     }
 
-    private CardRecord setupCardInfo(ResultSet rs, Patient patient) throws SQLException {
+    private CardRecord setupCardInfo(ResultSet rs, Patient patient, String lang) throws SQLException {
         CardRecord cardRecord = new CardRecord();
         cardRecord.setId(rs.getInt("id"));
         cardRecord.setRecordType(RecordType.valueOf(rs.getString("record_type")));
-        cardRecord.setDescription(rs.getString("description"));
+        cardRecord.setDescription(
+                rs.getString(
+                        (lang.equals(Const.RU))? "description_ru": "description"));
         cardRecord.setPatient(
                 (patient!=null)?
                         patient:
-                        factoryDAO.getPatientDAO().getById(rs.getInt("pat_id")));
+                        factoryDAO.getPatientDAO().getById(rs.getInt("pat_id"), lang));
         return cardRecord;
     }
 
     @Override
-    public CardRecord getByID(int id) {
+    public CardRecord getByID(int id, String lang) {
         CardRecord cardRecord = null;
         Connection connection = factoryDAO.getConnection();
         try(PreparedStatement ps = connection.prepareStatement(SELECT_RECORD_BY_ID);){
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                cardRecord = setupCardInfo(rs, null);
+                cardRecord = setupCardInfo(rs, null, lang);
             }
             rs.close();
         }catch (SQLException exc){
@@ -82,13 +85,14 @@ public class MySqlCardRecordDAO implements CardRecordDAO {
     }
 
     @Override
-    public List<CardRecord> getRecordOfOnePatient(Patient patient, Connection connection) {
+    public List<CardRecord> getRecordOfOnePatient(Patient patient, Connection connection, String lang) {
         List<CardRecord> cardRecords = new ArrayList<>();
         try(PreparedStatement ps = connection.prepareStatement(SELECT_RECORDS_ONE_PATIENT)){
             ps.setInt(1,patient.getId());
             ResultSet rs = ps.executeQuery();
+            patient = factoryDAO.getPatientDAO().changeLanguage(lang, patient, connection);
             while(rs.next()){
-                cardRecords.add(setupCardInfo(rs, patient));
+                cardRecords.add(setupCardInfo(rs, patient, lang));
             }
             rs.close();
         }catch (SQLException exc){

@@ -11,6 +11,6 @@ import java.util.List;
 public interface CardRecordDAO {
     void create(String description, String type, int patId);
     void deleteRecordsOfOnePatient(int patId, Connection connection) throws SQLException;
-    CardRecord getByID(int id);
-    List<CardRecord> getRecordOfOnePatient(Patient patient, Connection connection);
+    CardRecord getByID(int id, String lang);
+    List<CardRecord> getRecordOfOnePatient(Patient patient, Connection connection, String lang);
 }

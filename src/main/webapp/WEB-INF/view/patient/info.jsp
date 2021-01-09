@@ -19,15 +19,33 @@
     </form>
 </div>
 <p><fmt:message key="my.name" /> ${patient.name} ${patient.surname}</p>
-<p><fmt:message key="patient.gender" /> ${patient.gender}</p>
+<p><fmt:message key="patient.gender"/>
+    <c:choose>
+        <c:when test="${lang eq 'ru'}">
+            ${patient.gender.gender_ru}
+        </c:when>
+        <c:otherwise>
+            ${patient.gender}
+        </c:otherwise>
+    </c:choose>
+</p>
 <p><fmt:message key="patient.year" /> ${patient.year}</p>
 <p><fmt:message key="patient.phone" /> ${patient.phone}</p>
 <p><fmt:message key="patient.doctor" /> ${patient.doctor.name} ${patient.doctor.surname}</p>
 <br/>
 <p>---> <fmt:message key="patient.record.title" /> <---</p>
-<p c:if="${patient.getRecords().size() == 0}"><fmt:message key="patient.no.records" /></p>
+<c:if test="${patient.records.size() == 0}"><fmt:message key="patient.no.records"/></c:if>
 <c:forEach items="${patient.records}" var="record">
-    <p><fmt:message key="patient.record.type" /> ${record.recordType}</p>
+    <p><fmt:message key="patient.record.type" />
+        <c:choose>
+            <c:when test="${lang eq 'ru'}">
+                ${record.recordType.type_ru}
+            </c:when>
+            <c:otherwise>
+                ${record.recordType}
+            </c:otherwise>
+        </c:choose>
+    </p>
     <p><fmt:message key="patient.record.description" /> ${record.description}</p>
     <form id="saveButton" action="./patient" method="post">
         <c:if test="${record.recordType=='Diagnosis'}">

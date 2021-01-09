@@ -53,9 +53,9 @@ public class AdminService {
         userDAO.makeUserActive(patientDAO.getUserId(Integer.valueOf(patId)));
     }
 
-    public void changeDoctorForPatient(String patId, String newDocId) {
-        Patient patient = patientDAO.getById(Integer.valueOf(patId));
-        patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId)));
+    public void changeDoctorForPatient(String patId, String newDocId, String lang) {
+        Patient patient = patientDAO.getById(Integer.valueOf(patId),lang);
+        patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId), lang));
         patientDAO.updateDoctor(patient);
     }
 

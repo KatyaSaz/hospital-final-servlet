@@ -43,7 +43,7 @@
 <hr/>
 <c:if test="${patients.size() == 0}"><fmt:message key="doctor.no.patients" /></c:if>
 <c:forEach items="${patients}" var="patient">
-    <a href="/doctor-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
+    <a href="/doctor-patient?patId=${patient.id}&sessionLocale=${lang}">${patient.name} ${patient.surname}</a>
     <br/>
 </c:forEach>
 </body>

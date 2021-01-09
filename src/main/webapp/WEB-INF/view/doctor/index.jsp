@@ -30,9 +30,9 @@
             ${doctor.type}
         </c:otherwise>
     </c:choose>
-<%--${sessionScope.lang eq 'en' ? : } </p>--%>
+</p>
 <p><fmt:message key="doctor.experience"/> ${doctor.experience} <fmt:message key="doctor.experience.years"/></p>
 <br/>
-<a href="/doctor-patients?docId=${doctor.id}">--><fmt:message key="doctor.show.my.patients"/><--</a>
+<a href="/doctor-patients?docId=${doctor.id}&sessionLocale=${lang}">--><fmt:message key="doctor.show.my.patients"/><--</a>
 </body>
 </html>
