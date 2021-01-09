@@ -1,6 +1,5 @@
 package ua.sazonova.hospital.service;
 
-import ua.sazonova.hospital.constants.Sort;
 import ua.sazonova.hospital.dao.DoctorDAO;
 import ua.sazonova.hospital.dao.FactoryDAO;
 import ua.sazonova.hospital.dao.PatientDAO;
