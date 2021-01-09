@@ -1,6 +1,7 @@
 package ua.sazonova.hospital.controller;
 
 import org.mindrot.jbcrypt.BCrypt;
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
@@ -22,24 +23,24 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String logOut = req.getParameter("LogOut");
+        String logOut = req.getParameter(Const.LOG_OUT);
         if(logOut!=null){
-            System.out.println("SET NULL: "+req.getSession().getAttribute("USER"));
-            req.getSession().setAttribute("USER", null);
+            System.out.println("SET NULL: "+req.getSession().getAttribute(Const.USER));
+            req.getSession().setAttribute(Const.USER, null);
             resp.sendRedirect("./login");
         }
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter(Const.EMAIL);
+        String password = req.getParameter(Const.PASSWORD);
         if(username!=null & password!=null){
             User user = authorizationService.findUser(username);
             if (user != null) {
                 if (BCrypt.checkpw(password, user.getPassword())) {
-                    req.getSession().setAttribute("USER", user);
+                    req.getSession().setAttribute(Const.USER, user);
                     if (user.getRole().equals(Role.DOCTOR)) {
-                        resp.sendRedirect("/doctor?docId=" + user.getIdMoreInfo());
+                        resp.sendRedirect("/doctor?"+Const.DOCTOR_ID+"=" + user.getIdMoreInfo());
                     } else if (user.getRole().equals(Role.PATIENT)) {
-                        resp.sendRedirect("/patient?patId=" + user.getIdMoreInfo());
+                        resp.sendRedirect("/patient?"+Const.PATIENT_ID+"=" + user.getIdMoreInfo());
                     } else if (user.getRole().equals(Role.ADMIN)) {
                         resp.sendRedirect("/admin");
                     }else if(!user.isActive()){

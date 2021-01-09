@@ -40,7 +40,7 @@
         <option value="Diagnosis"><fmt:message key="record.type.diagnosis"/></option>
     </select>
     <br/>
-    <input type="hidden" name="patientId" value="${patient.id}"/>
+    <input type="hidden" name="patId" value="${patient.id}"/>
     <input type="submit" value="<fmt:message key="record.add.button"/>"/>
     <br/>
 </form>

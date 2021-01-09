@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.registration;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.User;
@@ -20,19 +21,18 @@ public class RegPatientController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher(View.REG_PATIENT_VIEW);
-        rd.forward(req, resp);
+        req.getRequestDispatcher(View.REG_PATIENT_VIEW).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        User user = (User) req.getSession().getAttribute("USER_REG");
-        req.getSession().setAttribute("USER_REG", null);
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String gender = req.getParameter("gender");
-        String year = req.getParameter("year");
-        String phone = req.getParameter("phone");
+        User user = (User) req.getSession().getAttribute(Const.USER_REG);
+        req.getSession().setAttribute(Const.USER_REG, null);
+        String name = req.getParameter(Const.NAME);
+        String surname = req.getParameter(Const.SURNAME);
+        String gender = req.getParameter(Const.PAT_GENDER);
+        String year = req.getParameter(Const.PAT_YEAR);
+        String phone = req.getParameter(Const.PAT_PHONE);
         Patient patient = new Patient(name, surname, Gender.valueOf(gender), Integer.valueOf(year), phone, user);
         adminService.createPatient(patient);
         resp.sendRedirect("/registration-success");

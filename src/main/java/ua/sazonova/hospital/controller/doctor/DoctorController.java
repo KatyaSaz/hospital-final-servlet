@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.doctor;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.service.DoctorService;
 
@@ -18,9 +19,8 @@ public class DoctorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_VIEW);
-        String docID = req.getParameter("docId");
-        System.out.println("in doctor: id: "+docID);
-        req.setAttribute("doctor", doctorService.getDoctorById(docID));
+        String docID = req.getParameter(Const.DOCTOR_ID);
+        req.setAttribute(Const.DOCTOR, doctorService.getDoctorById(docID));
         rd.forward(req, resp);
     }
 }

@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.registration;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
@@ -28,7 +29,7 @@ public class RegUserController extends HttpServlet {
         String role = req.getParameter("role");
         if (email != null & password != null & role != null) {
             User user = new User(email, password, Role.valueOf(role));
-            req.getSession().setAttribute("USER_REG", user);
+            req.getSession().setAttribute(Const.USER_REG, user);
             if(user.getRole().equals(Role.PATIENT)){
                 resp.sendRedirect("/registration-patient");
             }else if(user.getRole().equals(Role.DOCTOR)){

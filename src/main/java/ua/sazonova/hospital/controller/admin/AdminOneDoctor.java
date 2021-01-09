@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.admin;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.service.DoctorService;
 
@@ -18,8 +19,8 @@ public class AdminOneDoctor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_ONE_DOCTOR_VIEW);
-        String docID = req.getParameter("docId");
-        req.setAttribute("doctor", doctorService.getDoctorById(docID));
+        String docID = req.getParameter(Const.DOCTOR_ID);
+        req.setAttribute(Const.DOCTOR, doctorService.getDoctorById(docID));
         rd.forward(req, resp);
     }
 }

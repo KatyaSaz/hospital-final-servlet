@@ -33,7 +33,7 @@
     <form id="saveButton" action="./patient" method="post">
         <c:if test="${record.recordType=='Diagnosis'}">
             <input type="submit" value="<fmt:message key="patient.record.save"/>"/>
-            <input type="hidden" name="saveCardId" value ="${record.id}"/>
+            <input type="hidden" name="downloadCardId" value ="${record.id}"/>
         </c:if>
     </form>
     <br/>

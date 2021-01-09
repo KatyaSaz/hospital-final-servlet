@@ -17,7 +17,7 @@
         <h2 class="form-signin-heading"><fmt:message key="authorisation" /></h2>
         <p>
             <label for="username"><fmt:message key="email"/></label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+            <input type="text" id="username" name="email" class="form-control" placeholder="Username" required>
         </p>
         <p>
             <label for="password"><fmt:message key="password"/></label>

@@ -1,6 +1,6 @@
 package ua.sazonova.hospital.service;
 
-import ua.sazonova.hospital.constants.Sort;
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.dao.DoctorDAO;
 import ua.sazonova.hospital.dao.FactoryDAO;
 import ua.sazonova.hospital.dao.PatientDAO;
@@ -81,16 +81,17 @@ public class AdminService {
 
     public List<Doctor> sortDoctors(String field, String direction) {
         return doctorDAO.sort(
-                makeUpSortSelect(Sort.TABLE_DOCTORS, field, direction, null));
+                makeUpSortSelect(Const.DOCTORS, field, direction, null));
     }
 
     public List<Patient> sortPatients(String field, String direction) {
         return patientDAO.sort(
-                makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction, null));
+                makeUpSortSelect(Const.PATIENTS, field, direction, null));
     }
 
     public List<Patient> sortPatientsOfOneDoctor(String doc_id, String field, String direction) {
-        return patientDAO.sort(makeUpSortSelect(Sort.TABLE_PATIENTS, field, direction, doc_id));
+        return patientDAO.sort(
+                makeUpSortSelect(Const.PATIENTS, field, direction, doc_id));
     }
 
     private String makeUpSortSelect(String tableName, String field, String direction, String doc_id) {

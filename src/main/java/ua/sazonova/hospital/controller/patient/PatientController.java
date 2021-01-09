@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.controller.patient;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.CardRecord;
 import ua.sazonova.hospital.service.PatientService;
@@ -21,14 +22,14 @@ public class PatientController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.PATIENT_VIEW);
-        String patientId = req.getParameter("patId");
-        req.setAttribute("patient", patientService.getPatientById(patientId));
+        String patientId = req.getParameter(Const.PATIENT_ID);
+        req.setAttribute(Const.PATIENT, patientService.getPatientById(patientId));
         rd.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
-        String saveId = req.getParameter("saveCardId");
+        String saveId = req.getParameter(Const.DOWNLOAD_CARD_ID);
         CardRecord cardRecord = patientService.getIdOfCardRecordToSave(saveId);
         resp.setContentType("text");
         resp.setHeader("Content-disposition", "attachment;filename=" + cardRecord.getFileName());
