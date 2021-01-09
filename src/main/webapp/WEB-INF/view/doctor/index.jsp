@@ -21,7 +21,16 @@
 
 <h3><fmt:message key="my.info"/></h3>
 <p><fmt:message key="my.name"/> ${doctor.name} ${doctor.surname}</p>
-<p><fmt:message key="doctor.type"/> ${doctor.type}</p>
+<p><fmt:message key="doctor.type"/>
+    <c:choose>
+        <c:when test="${lang eq 'ru'}">
+            ${doctor.type.name_ru}
+        </c:when>
+        <c:otherwise>
+            ${doctor.type}
+        </c:otherwise>
+    </c:choose>
+<%--${sessionScope.lang eq 'en' ? : } </p>--%>
 <p><fmt:message key="doctor.experience"/> ${doctor.experience} <fmt:message key="doctor.experience.years"/></p>
 <br/>
 <a href="/doctor-patients?docId=${doctor.id}">--><fmt:message key="doctor.show.my.patients"/><--</a>

@@ -25,6 +25,10 @@ public class DoctorService {
         return (docID!=null)? doctorDAO.getById(Integer.valueOf(docID)): null;
     }
 
+    public Doctor getRussianDoctor(String docID){
+        return (docID!=null)? doctorDAO.getRussianDoctor(Integer.valueOf(docID)): null;
+    }
+
     public List<Patient> getPatientsOfDoctor(Doctor doctor){
         return patientDAO.getPatientsForDoctorService(doctor);
     }

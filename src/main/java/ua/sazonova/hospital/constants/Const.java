@@ -1,6 +1,11 @@
 package ua.sazonova.hospital.constants;
 
 public interface Const {
+    String SESSION_LOCALE = "sessionLocale";
+    String LANG = "lang";
+    String RU = "ru";
+    String EN = "en";
+
     String USER = "user";
     String USER_REG = "user_reg";
     String DOCTOR = "doctor";

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DoctorDAO extends SimpleDAO<Doctor>{
     List<Doctor> findBySameType(DoctorType doctorType);
+    Doctor getRussianDoctor(int id);
 }

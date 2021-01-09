@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.dao.mySql;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
@@ -120,11 +121,16 @@ public class MySqlDoctorDAO implements DoctorDAO {
         return factoryDAO.getUserDAO().getIdOfUser(id, SELECT_USER_ID);
     }
 
-    private Doctor setUpDoctorInfo(ResultSet rs, Connection connection) throws SQLException {
+    private Doctor setUpDoctorInfo(ResultSet rs, Connection connection, String lang) throws SQLException {
         Doctor doctor = new Doctor();
         doctor.setId(rs.getInt("id"));
-        doctor.setName(rs.getString("name"));
-        doctor.setSurname(rs.getString("surname"));
+        doctor.setName(
+                rs.getString(
+                (lang.equals(Const.RU))? "name_ru": "name"));
+        doctor.setSurname(
+                rs.getString(
+                        (lang.equals(Const.RU))? "surname_ru": "surname"));
+//                rs.getString("surname"));
         doctor.setType(DoctorType.valueOf(rs.getString("type")));
         doctor.setExperience(rs.getInt("experience"));
         doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
@@ -140,7 +146,32 @@ public class MySqlDoctorDAO implements DoctorDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                doctor = setUpDoctorInfo(rs, connection);
+                doctor = setUpDoctorInfo(rs, connection, Const.EN);
+            }
+            rs.close();
+        } catch (SQLException exc) {
+            exc.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return doctor;
+    }
+
+
+
+    @Override
+    public Doctor getRussianDoctor(int id) {
+        Connection connection = factoryDAO.getConnection();
+        Doctor doctor = null;
+        try(PreparedStatement ps = connection.prepareStatement(SELECT_DOCTOR_BY_ID)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                doctor = setUpDoctorInfo(rs, connection, Const.RU);
             }
             rs.close();
         } catch (SQLException exc) {
@@ -161,7 +192,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(request)){
             while(rs.next()){
-                doctors.add(setUpDoctorInfo(rs, connection));
+//                doctors.add(setUpDoctorInfo(rs, connection,));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -196,7 +227,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
             ps.setString(1, doctorType.toString());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                doctors.add(setUpDoctorInfo(rs, connection));
+//                doctors.add(setUpDoctorInfo(rs, connection));
             }
             rs.close();
         } catch (SQLException throwables) {
