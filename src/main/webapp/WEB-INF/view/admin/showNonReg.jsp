@@ -28,7 +28,7 @@
 <h3><fmt:message key="admin.non.reg.doctors"/></h3>
 <c:if test="${doctors.size() == 0}"><fmt:message key="admin.non.reg.none.doctors" /></c:if>
 <c:forEach items="${doctors}" var="doctor">
-    <a href="/admin-doctor?docId=${doctor.id}">${doctor.name} ${doctor.surname}</a>
+    <a href="/admin-doctor?docId=${doctor.id}&sessionLocale=${lang}">${doctor.name} ${doctor.surname}</a>
     <form method="POST" action="/admin-non-reg">
         <input type="hidden" name="forRegDocId" value="${doctor.id}"/>
         <input type="submit" value="<fmt:message key="admin.register.button"/>"/>
@@ -40,7 +40,7 @@
 <h3><fmt:message key="admin.non.reg.patients"/></h3>
 <c:if test="${patients.size() == 0}"><fmt:message key="admin.non.reg.none.patients" /></c:if>
 <c:forEach items="${patients}" var="patient">
-    <a href="/admin-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
+    <a href="/admin-patient?patId=${patient.id}&sessionLocale=${lang}">${patient.name} ${patient.surname}</a>
     <form method="post" action="/admin-non-reg">
         <input type="hidden" name="forRegPatId" value="${patient.id}"/>
         <input type="submit" value="<fmt:message key="admin.register.button"/>"/>

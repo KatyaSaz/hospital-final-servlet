@@ -36,22 +36,23 @@
         <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
         <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>
+    <input type="hidden" name="sessionLocale" value="${lang}"/>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 
 <form method="POST" action="/admin-doctors">
     <select id="type" name="searchType">
-        <option value=""></option>
         <option value="dermatologist" <c:if test="${typeDoc eq 'dermatologist'}">selected</c:if>><fmt:message key="doc.type.dermatologist"/></option>
         <option value="pediatrician" <c:if test="${typeDoc eq 'pediatrician'}">selected</c:if>><fmt:message key="doc.type.pediatrician"/></option>
         <option value="surgeon" <c:if test="${typeDoc eq 'surgeon'}">selected</c:if>><fmt:message key="doc.type.surgeon"/></option>
         <option value="optometrist" <c:if test="${typeDoc eq 'optometrist'}">selected</c:if>><fmt:message key="doc.type.optometrist"/></option>
     </select>
+    <input type="hidden" name="sessionLocale" value="${lang}"/>
     <button type="submit"><fmt:message key="doc.find.button"/></button>
 </form>
 
 <c:forEach items="${doctors}" var="doctor">
-    <a href="/admin-doctor?docId=${doctor.id}">${doctor.name} ${doctor.surname}</a>
+    <a href="/admin-doctor?docId=${doctor.id}&sessionLocale=${lang}">${doctor.name} ${doctor.surname}</a>
     <form method="post" action="/admin-doctors">
         <input type="hidden" name="deleteDocId" value="${doctor.id}"/>
         <input type="submit" value="<fmt:message key="delete.button"/>"/>

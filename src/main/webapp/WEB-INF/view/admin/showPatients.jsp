@@ -36,20 +36,23 @@
         <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
         <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>
+    <input type="hidden" name="sessionLocale" value="${lang}"/>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 
 <c:forEach items="${patients}" var="patient">
-    <a href="/admin-patient?patId=${patient.id}">${patient.name} ${patient.surname}</a>
+    <a href="/admin-patient?patId=${patient.id}&sessionLocale=${lang}">${patient.name} ${patient.surname}</a>
     <form method="post" action="/admin-patients">
         <select class="form-control" name="newDocId">
             <c:forEach items="${doctors}" var="doc">
                 <option value="${doc.id}" <c:if test="${doc.id eq patient.doctor.id}">selected</c:if>>
-                        ${doc.name} (${doc.type})
+                        ${doc.name} (<c:choose><c:when test="${lang eq 'ru'}">${doc.type.name_ru}</c:when>
+                            <c:otherwise>${doc.type}</c:otherwise></c:choose>)
                 </option>
             </c:forEach>
         </select>
         <input type="hidden" name="patId" value="${patient.id}"/>
+        <input type="hidden" name="sessionLocale" value="${lang}"/>
         <button type="submit"><fmt:message key="admin.appoint.button"/></button>
     </form>
     <form method="POST" action="/admin-patients">

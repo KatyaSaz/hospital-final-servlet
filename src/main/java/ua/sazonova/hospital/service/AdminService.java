@@ -13,10 +13,10 @@ import java.util.List;
 
 public class AdminService {
 
-    private static final String SELECT_ALL = "SELECT * FROM `";
-    private static final String WHERE_ID = "` WHERE doc_id=";
-    private static final String ORDER_BY = "ORDER BY `";
-    private static final String QUOTE = "` ";
+    private static final String SELECT_ALL = "SELECT * FROM ";
+    private static final String WHERE_ID = " WHERE doc_id=";
+    private static final String ORDER_BY = " ORDER BY ";
+    private static final String SPACE =" ";
 
     public static final int MY_SQL = 1;
     private DoctorDAO doctorDAO;
@@ -59,44 +59,47 @@ public class AdminService {
         patientDAO.updateDoctor(patient);
     }
 
-    public List<Doctor> getAllDoctors() {
-        return doctorDAO.getAll();
+    public List<Doctor> getAllDoctors(String lang) {
+        return doctorDAO.getAll(lang);
     }
 
-    public List<Patient> getAllPatients() {
-        return patientDAO.getAll();
+    public List<Patient> getAllPatients(String lang) {
+        return patientDAO.getAll(lang);
     }
 
-    public List<Doctor> getNonActiveDoctors() {
-        return doctorDAO.getNonActive();
+    public List<Doctor> getNonActiveDoctors(String lang) {
+        return doctorDAO.getNonActive(lang);
     }
 
-    public List<Patient> getNonActivePatients() {
-        return patientDAO.getNonActive();
+    public List<Patient> getNonActivePatients(String lang) {
+        return patientDAO.getNonActive(lang);
     }
 
-    public List<Doctor> getAllDoctorsBySameType(DoctorType doctorType) {
-        return doctorDAO.findBySameType(doctorType);
+    public List<Doctor> getAllDoctorsBySameType(DoctorType doctorType, String lang) {
+        return doctorDAO.findBySameType(doctorType, lang);
     }
 
-    public List<Doctor> sortDoctors(String field, String direction) {
+    public List<Doctor> sortDoctors(String field, String direction, String lang) {
         return doctorDAO.sort(
-                makeUpSortSelect(Const.DOCTORS, field, direction, null));
+                makeUpSortSelect(Const.DOCTORS, field, direction, null), lang);
     }
 
-    public List<Patient> sortPatients(String field, String direction) {
+    public List<Patient> sortPatients(String field, String direction, String lang) {
+        System.out.println(makeUpSortSelect(Const.PATIENTS, field, direction, null));
         return patientDAO.sort(
-                makeUpSortSelect(Const.PATIENTS, field, direction, null));
+                makeUpSortSelect(Const.PATIENTS, field, direction, null), lang);
     }
 
-    public List<Patient> sortPatientsOfOneDoctor(String doc_id, String field, String direction) {
+    public List<Patient> sortPatientsOfOneDoctor(String doc_id, String field, String direction, String lang) {
         return patientDAO.sort(
-                makeUpSortSelect(Const.PATIENTS, field, direction, doc_id));
+                makeUpSortSelect(Const.PATIENTS, field, direction, doc_id), lang);
     }
+
+
 
     private String makeUpSortSelect(String tableName, String field, String direction, String doc_id) {
         return (doc_id != null) ?
-                (SELECT_ALL + tableName + WHERE_ID + doc_id + ORDER_BY + field + QUOTE + direction) :
-                (SELECT_ALL + tableName + QUOTE + ORDER_BY + field + QUOTE + direction);
+                (SELECT_ALL + tableName + WHERE_ID + doc_id + ORDER_BY + field + SPACE + direction) :
+                (SELECT_ALL + tableName + ORDER_BY + field + SPACE + direction);
     }
 }

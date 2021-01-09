@@ -29,9 +29,9 @@
 
 <div id="menu">
     <ul>
-        <li><a href="/admin-patients"><fmt:message key="admin.index.menu.all.patients"/></a></li>
-        <li><a href="/admin-doctors"><fmt:message key="admin.index.menu.all.doctors"/></a></li>
-        <li><a href="/admin-non-reg"><fmt:message key="admin.index.menu.all.non.reg"/></a></li>
+        <li><a href="/admin-patients?sessionLocale=${lang}"><fmt:message key="admin.index.menu.all.patients"/></a></li>
+        <li><a href="/admin-doctors?sessionLocale=${lang}"><fmt:message key="admin.index.menu.all.doctors"/></a></li>
+        <li><a href="/admin-non-reg?sessionLocale=${lang}"><fmt:message key="admin.index.menu.all.non.reg"/></a></li>
     </ul>
 </div>
 </body>

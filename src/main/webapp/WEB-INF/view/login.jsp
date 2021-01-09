@@ -24,6 +24,7 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </p>
         <a href="/registration"><fmt:message key="registr"/></a>
+        <input type="hidden" name="sessionLocale" value="${lang}"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="signin" /></button>
     </form>
 </div>

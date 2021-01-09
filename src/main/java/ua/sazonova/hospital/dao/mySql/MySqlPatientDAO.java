@@ -187,21 +187,6 @@ public class MySqlPatientDAO implements PatientDAO {
         return patient;
     }
 
-    @Override
-    public List<Patient> getAll() {
-        return null;
-    }
-
-    @Override
-    public List<Patient> getNonActive() {
-        return null;
-    }
-
-    @Override
-    public List<Patient> sort(String request) {
-        return null;
-    }
-
     private Patient seUpPatientInfo(ResultSet rs, Connection connection, Doctor doctor, String lang) throws SQLException {
         Patient patient = new Patient();
         patient.setId(rs.getInt("id"));
@@ -220,15 +205,19 @@ public class MySqlPatientDAO implements PatientDAO {
                 doctor:
                 factoryDAO.getDoctorDAO().getById(rs.getInt("doc_id"), lang));
         patient.setRecords(factoryDAO.getCardRecordDAO().getRecordOfOnePatient(patient, connection, lang));
+        System.out.println(patient.getId()+" "+patient.getSurname());
         return patient;
     }
 
     private List<Patient> getPatientsByRequest(String request, String lang){
+        System.out.println("get pat by request");
         List<Patient> patients = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
         try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_ALL)){
+            ResultSet rs = stmt.executeQuery(request)){
+            System.out.println(lang);
             while(rs.next()){
+
                 patients.add(seUpPatientInfo(rs, connection, null, lang));
             }
         } catch (SQLException throwables) {
@@ -266,21 +255,22 @@ public class MySqlPatientDAO implements PatientDAO {
         }
         return patient;
     }
-//
-//    @Override
-//    public List<Patient> getAll() {
-//        return  getPatientsByRequest(SELECT_ALL, lang);
-//    }
-//
-//    @Override
-//    public List<Patient> getNonActive() {
-//        return getPatientsByRequest(SELECT_NON_REGISTER, lang);
-//    }
-//
-//    @Override
-//    public List<Patient> sort(String request) {
-//        return getPatientsByRequest(request);
-//    }
+
+    @Override
+    public List<Patient> getAll(String lang) {
+        return  getPatientsByRequest(SELECT_ALL, lang);
+    }
+
+    @Override
+    public List<Patient> getNonActive(String lang) {
+        return getPatientsByRequest(SELECT_NON_REGISTER, lang);
+    }
+
+    @Override
+    public List<Patient> sort(String request, String lang) {
+        System.out.println("in sort");
+        return getPatientsByRequest(request, lang);
+    }
 
     @Override
     public List<Patient> getPatientsOfOneDoctor(Doctor doctor, Connection connection, String lang) {

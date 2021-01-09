@@ -7,7 +7,7 @@ public interface SimpleDAO<T> {
     void delete(int id);
     int getUserId(int id);
     T getById(int id, String lang);
-    List<T> getAll();
-    List<T> getNonActive();
-    List<T> sort(String request);
+    List<T> getAll(String lang);
+    List<T> getNonActive(String lang);
+    List<T> sort(String request, String lang);
 }

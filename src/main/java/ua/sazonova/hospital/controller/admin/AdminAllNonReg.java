@@ -3,6 +3,7 @@ package ua.sazonova.hospital.controller.admin;
 import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.service.AdminService;
+import ua.sazonova.hospital.service.Local;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,8 +20,8 @@ public class AdminAllNonReg extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_NON_REG_VIEW);
-        req.setAttribute(Const.DOCTORS, adminService.getNonActiveDoctors());
-        req.setAttribute(Const.PATIENTS, adminService.getNonActivePatients());
+        req.setAttribute(Const.DOCTORS, adminService.getNonActiveDoctors(Local.getLanguage(req)));
+        req.setAttribute(Const.PATIENTS, adminService.getNonActivePatients(Local.getLanguage(req)));
         rd.forward(req, resp);
     }
 

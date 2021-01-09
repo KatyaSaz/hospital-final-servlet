@@ -191,13 +191,13 @@ public class MySqlDoctorDAO implements DoctorDAO {
 //        return getDoctorByLanguage(id, Const.RU);
 //    }
 
-    private List<Doctor> getDoctorsByRequest(String request){
+    private List<Doctor> getDoctorsByRequest(String request, String lang){
         List<Doctor> doctors = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(request)){
             while(rs.next()){
-//                doctors.add(setUpDoctorInfo(rs, connection,));
+                doctors.add(setUpDoctorInfo(rs, connection,lang));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -210,29 +210,29 @@ public class MySqlDoctorDAO implements DoctorDAO {
     }
 
     @Override
-    public List<Doctor> getAll() {
-        return getDoctorsByRequest(SELECT_ALL);
+    public List<Doctor> getAll(String lang) {
+        return getDoctorsByRequest(SELECT_ALL, lang);
     }
 
     @Override
-    public List<Doctor> getNonActive() {
-        return getDoctorsByRequest(SELECT_NON_REGISTER);
+    public List<Doctor> getNonActive(String lang) {
+        return getDoctorsByRequest(SELECT_NON_REGISTER, lang);
     }
 
     @Override
-    public List<Doctor> sort(String request) {
-        return getDoctorsByRequest(request);
+    public List<Doctor> sort(String request, String lang) {
+        return getDoctorsByRequest(request, lang);
     }
 
     @Override
-    public List<Doctor> findBySameType(DoctorType doctorType) {
+    public List<Doctor> findBySameType(DoctorType doctorType, String lang) {
         List<Doctor> doctors = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
         try(PreparedStatement ps = connection.prepareStatement(SELECT_ALL_BY_ONE_TYPE)){
             ps.setString(1, doctorType.toString());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-//                doctors.add(setUpDoctorInfo(rs, connection));
+                doctors.add(setUpDoctorInfo(rs, connection, lang));
             }
             rs.close();
         } catch (SQLException throwables) {

@@ -33,14 +33,17 @@ public class DoctorShowPatients extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String docID = req.getParameter(Const.DOCTOR_ID);
+        System.out.println(docID);
         String sortField = req.getParameter(Const.SORT_FIELD);
+        System.out.println(sortField);
         String sortDirection = req.getParameter(Const.SORT_DIRECTION);
+        System.out.println(sortDirection);
         if(sortField!= null && sortDirection!=null){
             RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_HIS_PATIENTS_VIEW);
             Doctor doctor = doctorService.getDoctorById(docID, Local.getLanguage(req));
             req.setAttribute(Const.DOCTOR, doctor);
             req.setAttribute(Const.PATIENTS,
-                    adminService.sortPatientsOfOneDoctor(docID, sortField, sortDirection));
+                    adminService.sortPatientsOfOneDoctor(docID, sortField, sortDirection, Local.getLanguage(req)));
             req.setAttribute(Const.FIELD_SAVED_VALUE, sortField);
             req.setAttribute(Const.DIRECTION_SAVED_VALUE, sortDirection);
             rd.forward(req, resp);

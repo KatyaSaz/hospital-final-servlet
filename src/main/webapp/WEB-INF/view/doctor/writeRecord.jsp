@@ -20,6 +20,7 @@
     <div class="goBack" style="float:left;">
         <form action="/doctor" method="GET">
             <input type="hidden" name="docId" value="${patient.doctor.id}"/>
+            <input type="hidden" name="sessionLocale" value="${lang}"/>
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>

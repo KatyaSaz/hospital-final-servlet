@@ -20,6 +20,7 @@
     <div class="goBack" style="float:left;">
         <form action="/doctor" method="get">
             <input type="hidden" name="docId" value="${doctor.id}"/>
+            <input type="hidden" name="sessionLocale" value="${lang}"/>
             <button type="submit"><fmt:message key="back.to.main.button"/></button>
         </form>
     </div>
@@ -36,7 +37,8 @@
         <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
         <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>
-    <input type="hidden" name="docID" value="${doctor.id}"/>
+    <input type="hidden" name="docId" value="${doctor.id}"/>
+    <input type="hidden" name="sessionLocale" value="${lang}"/>
     <button type="submit"><fmt:message key="sort.button"/></button>
 </form>
 <br/>
