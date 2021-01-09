@@ -1,6 +1,7 @@
 package ua.sazonova.hospital.constants;
 
 public interface View {
+    String LOGIN_FORM_VIEW="WEB-INF/view/login.jsp";
     String PATIENT_VIEW = "WEB-INF/view/patient/info.jsp";
 
     String DOCTOR_VIEW = "WEB-INF/view/doctor/index.jsp";
@@ -18,9 +19,9 @@ public interface View {
     String REG_USER_VIEW = "WEB-INF/view/registration/userReg.jsp";
     String REG_DOCTOR_VIEW = "WEB-INF/view/registration/doctorReg.jsp";
     String REG_PATIENT_VIEW= "WEB-INF/view/registration/patientReg.jsp";
-    String REG_SUCCESS_VIEW = "WEB-INF/view/registration/success.jsp";
+    String REG_SUCCESS_WAIT_FOR_ADMIN_TO_APPROVE = "WEB-INF/view/registration/success.jsp";
 
-    String LOGIN_FORM_VIEW="WEB-INF/view/login.jsp";
-    String LOGIN_ERROR_USER_NOT_FOUND_VIEW="WEB-INF/view/errors/userNotFound.jsp";
-    String LOGIN_ERROR_WRONG_PASSWORD_VIEW="WEB-INF/view/errors/passwordWrong.jsp";
+    String ERROR_USER_NOT_FOUND_VIEW ="WEB-INF/view/errors/userNotFound.jsp";
+    String ERROR_WRONG_PASSWORD_VIEW ="WEB-INF/view/errors/passwordWrong.jsp";
+    String ERROR_PROHIBITED_LINK_VIEW="WEB-INF/view/errors/prohibitedLink.jsp";
 }

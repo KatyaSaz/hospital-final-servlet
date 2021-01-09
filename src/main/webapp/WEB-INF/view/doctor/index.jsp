@@ -11,9 +11,10 @@
 </head>
 <body>
 <div class="container">
-    <form action="/login" method="GET">
-        <a href="?docId=${doctor.id}&sessionLocale=en">EN</a>
-        <a href="?docId=${doctor.id}&sessionLocale=ru">RU</a>
+    <a href="?docId=${doctor.id}&sessionLocale=en">EN</a>
+    <a href="?docId=${doctor.id}&sessionLocale=ru">RU</a>
+    <form action="/login" method="post">
+        <input type="hidden" name="LogOut"/>
         <button type="submit"id="logOUT"><fmt:message key="logout" /></button>
     </form>
 </div>

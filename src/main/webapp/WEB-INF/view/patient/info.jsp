@@ -11,9 +11,10 @@
     <title><fmt:message key="one.patient.title" /></title>
 </head>
 <div class="container">
-    <form action="/login" method="GET">
-        <a href="?patId=${patient.id}&sessionLocale=en">EN</a>
-        <a href="?patId=${patient.id}&sessionLocale=ru">RU</a>
+    <a href="?patId=${patient.id}&sessionLocale=en">EN</a>
+    <a href="?patId=${patient.id}&sessionLocale=ru">RU</a>
+    <form action="/login" method="post">
+        <input type="hidden" name="LogOut"/>
         <button type="submit"id="logOUT"><fmt:message key="logout" /></button>
     </form>
 </div>

@@ -12,7 +12,8 @@
 <body>
 <div class="topMenu">
     <div class="logOut" style="float:left;">
-        <form action="/login" method="GET">
+        <form action="/login" method="post">
+            <input type="hidden" name="LogOut"/>
             <button type="submit"><fmt:message key="logout"/></button>
         </form>
     </div>
