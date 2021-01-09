@@ -15,6 +15,7 @@
     }
 </style>
 <body>
+
 <div class="container">
     <a href="?sessionLocale=en">EN</a>
     <a href="?sessionLocale=ru">RU</a>

@@ -19,7 +19,7 @@ public interface View {
     String REG_USER_VIEW = "WEB-INF/view/registration/userReg.jsp";
     String REG_DOCTOR_VIEW = "WEB-INF/view/registration/doctorReg.jsp";
     String REG_PATIENT_VIEW= "WEB-INF/view/registration/patientReg.jsp";
-    String REG_SUCCESS_WAIT_FOR_ADMIN_TO_APPROVE = "WEB-INF/view/registration/success.jsp";
+    String WAIT_FOR_ADMIN_TO_APPROVE = "WEB-INF/view/registration/success.jsp";
 
     String ERROR_USER_NOT_FOUND_VIEW ="WEB-INF/view/errors/userNotFound.jsp";
     String ERROR_WRONG_PASSWORD_VIEW ="WEB-INF/view/errors/passwordWrong.jsp";

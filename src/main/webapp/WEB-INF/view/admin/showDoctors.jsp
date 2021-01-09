@@ -29,12 +29,10 @@
 
 <form method="POST" action="/admin-doctors">
     <select id="field" name="sortField">
-        <option value=""></option>
         <option value="name" <c:if test="${fieldS eq 'name'}">selected</c:if>><fmt:message key="sort.value.name"/></option>
         <option value="experience" <c:if test="${fieldS eq 'experience'}">selected</c:if>><fmt:message key="doc.sort.value.experience"/></option>
     </select>
     <select id="direction" name="sortDirection">
-        <option value=""></option>
         <option value="ASC" <c:if test="${directS eq 'ASC'}">selected</c:if>><fmt:message key="sort.value.direction.asc"/></option>
         <option value="DESC" <c:if test="${directS eq 'DESC'}">selected</c:if>><fmt:message key="sort.value.direction.desc"/></option>
     </select>

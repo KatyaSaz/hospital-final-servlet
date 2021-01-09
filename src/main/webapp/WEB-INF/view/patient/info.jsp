@@ -29,7 +29,6 @@
 <c:forEach items="${patient.records}" var="record">
     <p><fmt:message key="patient.record.type" /> ${record.recordType}</p>
     <p><fmt:message key="patient.record.description" /> ${record.description}</p>
-<%--    @{/patient/download/{id}(id=${record.getId()})}--%>
     <form id="saveButton" action="./patient" method="post">
         <c:if test="${record.recordType=='Diagnosis'}">
             <input type="submit" value="<fmt:message key="patient.record.save"/>"/>

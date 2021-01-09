@@ -8,11 +8,13 @@ import ua.sazonova.hospital.entity.enam.Role;
 import ua.sazonova.hospital.service.AuthorizationService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
     private AuthorizationService authorizationService = new AuthorizationService();
 
@@ -44,7 +46,7 @@ public class LoginController extends HttpServlet {
                     } else if (user.getRole().equals(Role.ADMIN)) {
                         resp.sendRedirect("/admin");
                     }else if(!user.isActive()){
-                        req.getRequestDispatcher(View.REG_SUCCESS_WAIT_FOR_ADMIN_TO_APPROVE).forward(req, resp);
+                        req.getRequestDispatcher(View.WAIT_FOR_ADMIN_TO_APPROVE).forward(req, resp);
                     }
                 } else {
                     req.getRequestDispatcher(View.ERROR_WRONG_PASSWORD_VIEW).forward(req, resp);

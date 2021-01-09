@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.filter;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
@@ -24,7 +25,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         String url = httpServletRequest.getRequestURL().toString();
-        User user = (User) httpServletRequest.getSession().getAttribute("USER");
+        User user = (User) httpServletRequest.getSession().getAttribute(Const.USER);
         if(user==null){
             httpServletResponse.sendRedirect("/login");
         }else if(url.contains("/admin") & user.getRole().equals(Role.ADMIN)){
@@ -33,6 +34,8 @@ public class AuthenticationFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }else if(url.contains("/patient") & user.getRole().equals(Role.PATIENT) & user.isActive()){
             filterChain.doFilter(servletRequest, servletResponse);
+        }else if(!user.isActive()) {
+            httpServletRequest.getRequestDispatcher(View.WAIT_FOR_ADMIN_TO_APPROVE).forward(servletRequest, servletResponse);
         }else{
             httpServletRequest.getRequestDispatcher(View.ERROR_PROHIBITED_LINK_VIEW).forward(servletRequest, servletResponse);
         }

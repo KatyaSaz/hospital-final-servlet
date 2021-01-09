@@ -14,6 +14,6 @@ public class RegSuccessController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(View.REG_SUCCESS_WAIT_FOR_ADMIN_TO_APPROVE).forward(req, resp);
+        req.getRequestDispatcher(View.WAIT_FOR_ADMIN_TO_APPROVE).forward(req, resp);
     }
 }

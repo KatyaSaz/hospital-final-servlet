@@ -5,13 +5,4 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <servlet>
-    <servlet-name>loginPage</servlet-name>
-    <servlet-class>ua.sazonova.hospital.controller.LoginController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>loginPage</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-
 </web-app>
