@@ -6,6 +6,7 @@ import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 import ua.sazonova.hospital.entity.enam.Gender;
 import ua.sazonova.hospital.dao.PatientDAO;
+import ua.sazonova.hospital.entity.extend.PatientExtend;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MySqlPatientDAO implements PatientDAO {
     private static final String SELECT_ALL="SELECT * FROM `patients`";
     private static final String SELECT_NON_REGISTER = "SELECT pat.id, pat.name, pat.surname, pat.gender, pat.year, pat.phone, pat.doc_id, pat.user_id FROM users AS user LEFT JOIN patients AS pat ON user.id=pat.user_id WHERE user.role='PATIENT' AND user.is_active=false";
     private static final String SELECT_PATIENTS_OF_ONE_DOCTOR="SELECT * FROM `patients` WHERE doc_id=?";
-    private static final String INSERT_PATIENT="INSERT INTO `patients`(`name`, `surname`, `gender`, `year`, `phone`, `doc_id`, `user_id`) VALUES (?,?,?,?,?,?,?)";
+    private static final String INSERT_PATIENT="INSERT INTO `patients`(`name`, `surname`, `gender`, `year`, `phone`, `doc_id`, `user_id`, `name_ru`, `surname_ru`) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_DOCTOR_IN_PATIENT = "UPDATE `patients` SET `doc_id`=? WHERE id=?";
     private static final String DELETE_PATIENT="DELETE FROM `patients` WHERE id=?";
 
@@ -40,7 +41,7 @@ public class MySqlPatientDAO implements PatientDAO {
         return patientId;
     }
 
-    private int createPatient(Patient patient, int docID, int userID, Connection connection) throws SQLException {
+    private int createPatient(PatientExtend patient, int docID, int userID, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(INSERT_PATIENT);
         ps.setString(1, patient.getName());
         ps.setString(2, patient.getSurname());
@@ -49,13 +50,15 @@ public class MySqlPatientDAO implements PatientDAO {
         ps.setString(5, patient.getPhone());
         ps.setInt(6, docID);
         ps.setInt(7, userID);
+        ps.setString(8, patient.getName_ru());
+        ps.setString(9, patient.getSurname_ru());
         ps.execute();
         ps.close();
         return getIdOfPatientByUserId(userID, connection);
     }
 
     @Override
-    public void create(Patient patient) {
+    public void create(PatientExtend patient) {
         Connection connection = factoryDAO.getConnection();
         try {
             connection.setAutoCommit(false);

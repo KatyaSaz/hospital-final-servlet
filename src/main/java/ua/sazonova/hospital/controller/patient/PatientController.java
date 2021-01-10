@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @WebServlet("/patient")
 public class PatientController extends HttpServlet {
@@ -31,7 +32,7 @@ public class PatientController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         String saveId = req.getParameter(Const.DOWNLOAD_CARD_ID);
         CardRecord cardRecord =
                 patientService.getIdOfCardRecordToSave(saveId, Local.getLanguage(req));

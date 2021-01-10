@@ -8,6 +8,8 @@ import ua.sazonova.hospital.dao.UserDAO;
 import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
+import ua.sazonova.hospital.entity.extend.DoctorExtend;
+import ua.sazonova.hospital.entity.extend.PatientExtend;
 
 import java.util.List;
 
@@ -29,11 +31,11 @@ public class AdminService {
         userDAO = FactoryDAO.getInstance(MY_SQL).getUserDAO();
     }
 
-    public void createDoctor(Doctor doctor) {
+    public void createDoctor(DoctorExtend doctor) {
         doctorDAO.create(doctor);
     }
 
-    public void createPatient(Patient patient) {
+    public void createPatient(PatientExtend patient) {
         patientDAO.create(patient);
     }
 

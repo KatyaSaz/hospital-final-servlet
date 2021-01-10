@@ -11,11 +11,17 @@
 </head>
 <body>
 <form method="post" action="/registration-doctor">
-    <label for="name"><fmt:message key="reg.name"/></label>
-    <input type="text" name="name" id="name"/>
+    <label for="name_en"><fmt:message key="reg.name.en"/></label>
+    <input type="text" name="name_en" id="name_en"/>
     <br/>
-    <label for="surname"><fmt:message key="reg.surname"/></label>
-    <input type="text" name="surname" id="surname"/>
+    <label for="surname_en"><fmt:message key="reg.surname.en"/></label>
+    <input type="text" name="surname_en" id="surname_en"/>
+    <br/>
+    <label for="name_ru"><fmt:message key="reg.name.ru"/></label>
+    <input type="text" name="name_ru" id="name_ru"/>
+    <br/>
+    <label for="surname_ru"><fmt:message key="reg.surname.ru"/></label>
+    <input type="text" name="surname_ru" id="surname_ru"/>
     <br/>
     <label for="type"><fmt:message key="reg.doc.type"/></label>
     <select id="type" name="type">

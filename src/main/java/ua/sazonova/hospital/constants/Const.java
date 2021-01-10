@@ -41,12 +41,14 @@ public interface Const {
     String PASSWORD = "password";
     String LOG_OUT = "LogOut";
 
-    String NAME = "name";
-    String SURNAME = "surname";
+    String NAME_EN = "name_en";
+    String SURNAME_EN = "surname_en";
+    String NAME_RU = "name_ru";
+    String SURNAME_RU = "surname_ru";
     String DOC_TYPE = "type";
     String DOC_EXPERIENCE ="experience";
 
-    String PAT_GENDER = "genger";
+    String PAT_GENDER = "gender";
     String PAT_YEAR = "year";
     String PAT_PHONE = "phone";
 }

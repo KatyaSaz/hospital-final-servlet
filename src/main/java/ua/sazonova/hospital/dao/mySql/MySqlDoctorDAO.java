@@ -5,6 +5,7 @@ import ua.sazonova.hospital.entity.Doctor;
 import ua.sazonova.hospital.entity.Patient;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 import ua.sazonova.hospital.dao.DoctorDAO;
+import ua.sazonova.hospital.entity.extend.DoctorExtend;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
     private final String SELECT_ALL="SELECT * FROM `doctors`";
     private final String SELECT_ALL_BY_ONE_TYPE ="SELECT * FROM `doctors` WHERE `type`=?";
     private final String SELECT_NON_REGISTER = "SELECT doc.id, doc.name, doc.surname, doc.type, doc.experience, doc.user_id FROM users AS user LEFT JOIN doctors AS doc ON user.id=doc.user_id WHERE user.role='DOCTOR' AND user.is_active=false";
-    private final String INSERT_DOCTOR="INSERT INTO `doctors`(`name`, `surname`, `type`, `experience`, `user_id`) VALUES (?,?,?,?,?)";
+    private final String INSERT_DOCTOR="INSERT INTO `doctors`(`name`, `surname`, `type`, `experience`, `user_id`, `name_ru`, `surname_ru`) VALUES (?,?,?,?,?,?,?)";
     private final String DELETE_DOCTOR="DELETE FROM `doctors` WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
@@ -38,20 +39,22 @@ public class MySqlDoctorDAO implements DoctorDAO {
         return doctorId;
     }
 
-    private int createDoctor(Doctor doctor, int userID, Connection connection) throws SQLException {
+    private int createDoctor(DoctorExtend doctor, int userID, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(INSERT_DOCTOR);
         ps.setString(1, doctor.getName());
         ps.setString(2, doctor.getSurname());
         ps.setString(3, doctor.getType().toString());
         ps.setInt(4, doctor.getExperience());
         ps.setInt(5, userID);
+        ps.setString(6, doctor.getName_ru());
+        ps.setString(7, doctor.getSurname_ru());
         ps.execute();
         ps.close();
         return getIdOfDoctorByUserId(userID, connection);
     }
 
     @Override
-    public void create(Doctor doctor) {
+    public void create(DoctorExtend doctor) {
         Connection connection = factoryDAO.getConnection();
         try {
             connection.setAutoCommit(false);
