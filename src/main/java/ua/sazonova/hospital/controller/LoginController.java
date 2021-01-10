@@ -28,7 +28,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String logOut = req.getParameter(Const.LOG_OUT);
         if(logOut!=null){
-            System.out.println("SET NULL: "+req.getSession().getAttribute(Const.USER));
             req.getSession().setAttribute(Const.USER, null);
             resp.sendRedirect("./login");
         }

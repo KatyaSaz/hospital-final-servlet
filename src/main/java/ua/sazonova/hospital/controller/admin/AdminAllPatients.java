@@ -28,27 +28,26 @@ public class AdminAllPatients extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String sortField = req.getParameter(Const.SORT_FIELD);
-        System.out.println(sortField);
         String sortDirection = req.getParameter(Const.SORT_DIRECTION);
-        System.out.println(sortDirection);
         if (sortField != null && sortDirection != null) {
-            RequestDispatcher rd = req.getRequestDispatcher(View.ADMIN_PATIENTS_VIEW);
             req.setAttribute(Const.PATIENTS, adminService.sortPatients(sortField, sortDirection, Local.getLanguage(req)));
             req.setAttribute(Const.DOCTORS, adminService.getAllDoctors(Local.getLanguage(req)));
             req.setAttribute(Const.FIELD_SAVED_VALUE, sortField);
             req.setAttribute(Const.DIRECTION_SAVED_VALUE, sortDirection);
-            rd.forward(req, resp);
+            req.getRequestDispatcher(View.ADMIN_PATIENTS_VIEW).forward(req, resp);
         }
 
         String newDocId = req.getParameter(Const.NEW_DOCTOR_ID);
         String patId = req.getParameter(Const.PATIENT_ID);
         if (newDocId != null && patId != null) {
             adminService.changeDoctorForPatient(patId, newDocId, Local.getLanguage(req));
+            resp.sendRedirect("/admin-patients");
         }
+
         String deletePatId = req.getParameter(Const.DELETE_PATIENT_ID);
         if (deletePatId != null) {
             adminService.deletePatient(deletePatId);
+            resp.sendRedirect("/admin-patients");
         }
-        resp.sendRedirect("./admin-patients");
     }
 }
