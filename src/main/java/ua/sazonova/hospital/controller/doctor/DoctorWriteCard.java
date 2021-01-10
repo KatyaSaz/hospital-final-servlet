@@ -27,11 +27,13 @@ public class DoctorWriteCard extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws IOException {
+        String land = req.getParameter(Const.SESSION_LOCALE);
         String patientId = req.getParameter(Const.PATIENT_ID);
         int patId = Integer.valueOf(patientId);
-        String description = req.getParameter(Const.CARD_DESCRIPTION);
+        String description_en = req.getParameter(Const.CARD_DESCRIPTION_EN);
+        String description_ru = req.getParameter(Const.CARD_DESCRIPTION_RU);
         String type = req.getParameter(Const.CARD_TYPE);
-        patientService.createCardRecord(description, type, patId);
-        resp.sendRedirect("./doctor-patient?"+Const.PATIENT_ID+"="+patId);
+        patientService.createCardRecord(description_en, description_ru, type, patId);
+        resp.sendRedirect("./doctor-patient?"+Const.PATIENT_ID+"="+patId+"&sessionLocale="+ land);
     }
 }

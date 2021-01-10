@@ -32,7 +32,8 @@ public interface Const {
     String SEARCH_TYPE_DOCTOR = "searchType";
     String SEARCH_SAVED_VALUE = "typeDoc";
 
-    String CARD_DESCRIPTION="description";
+    String CARD_DESCRIPTION_EN="description_en";
+    String CARD_DESCRIPTION_RU="description_ru";
     String CARD_TYPE="type";
     String DOWNLOAD_CARD_ID="downloadCardId";
 

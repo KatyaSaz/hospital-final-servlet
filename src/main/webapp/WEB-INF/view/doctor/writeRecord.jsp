@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
@@ -31,8 +32,11 @@
 <h3><fmt:message key="card.create.title"/></h3>
 
 <form method="post" action="/doctor-patient-write" >
-    <label for="descrip"><fmt:message key="card.description"/></label>
-    <textarea id="descrip" name="description"></textarea>
+    <label for="descrip_en"><fmt:message key="card.description.en"/></label>
+    <textarea id="descrip_en" name="description_en"></textarea>
+    <br/>
+    <label for="descrip_ru"><fmt:message key="card.description.ru"/></label>
+    <textarea id="descrip_ru" name="description_ru"></textarea>
     <br/>
     <label for="type"><fmt:message key="card.record.type"/></label>
     <select  id="type" name="type">
@@ -42,6 +46,7 @@
     </select>
     <br/>
     <input type="hidden" name="patId" value="${patient.id}"/>
+    <input type="hidden" name="sessionLocale" value="${lang}"/>
     <input type="submit" value="<fmt:message key="record.add.button"/>"/>
     <br/>
 </form>

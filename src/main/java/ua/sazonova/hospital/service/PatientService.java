@@ -25,7 +25,7 @@ public class PatientService {
         return  (saveCardId!=null)? cardRecordDAO.getByID(Integer.valueOf(saveCardId), lang):null;
     }
 
-    public void createCardRecord(String description, String type, int patId){
-        cardRecordDAO.create(description,type,patId);
+    public void createCardRecord(String description_en, String description_ru, String type, int patId){
+        cardRecordDAO.create(description_en, description_ru, type, patId);
     }
 }

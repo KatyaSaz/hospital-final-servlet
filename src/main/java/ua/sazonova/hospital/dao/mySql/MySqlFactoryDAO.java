@@ -23,7 +23,10 @@ public class MySqlFactoryDAO extends FactoryDAO {
     public Connection getConnection(){
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital?" + "user=root&password=");
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/hospital?"
+                            + "user=root&password="
+                            +"&useEncoding=true&characterEncoding=UTF-8");
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
@@ -31,7 +34,6 @@ public class MySqlFactoryDAO extends FactoryDAO {
         }
         return conn;
     }
-
 
     @Override
     public UserDAO getUserDAO() {
