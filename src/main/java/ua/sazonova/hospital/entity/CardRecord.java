@@ -1,5 +1,6 @@
 package ua.sazonova.hospital.entity;
 
+import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.entity.enam.RecordType;
 
 public class CardRecord {
@@ -8,17 +9,18 @@ public class CardRecord {
     private String description;
     private Patient patient;
 
-    public CardRecord() {
-    }
+    public CardRecord() {}
 
+    /**
+     * All fields constructor
+     *
+     * @param id          - id of card record
+     * @param recordType  - type of record (enumeration RecordType)
+     * @param description - the recording itself
+     * @param patient     - patient in whose card this entry was made
+     */
     public CardRecord(int id, RecordType recordType, String description, Patient patient) {
         this.id = id;
-        this.recordType = recordType;
-        this.description = description;
-        this.patient = patient;
-    }
-
-    public CardRecord(RecordType recordType, String description, Patient patient) {
         this.recordType = recordType;
         this.description = description;
         this.patient = patient;
@@ -66,13 +68,15 @@ public class CardRecord {
                 '}';
     }
 
-        public String diagnoseToString(){
-        return "Patient name: "+ patient.getName()+" "+ patient.getSurname()+"\n"
-                +"Doctor name: "+ patient.getDoctor().getName()+" "+ patient.getDoctor().getSurname()+"\n"
-                +recordType+": "+ description;
+    public String diagnoseToString() {
+        return Const.PATIENT_NAME + patient.getName() + Const.SPACE
+                + patient.getSurname() + Const.NEW_LINE
+                + Const.DOCTOR_NAME + patient.getDoctor().getName() + Const.SPACE
+                + patient.getDoctor().getSurname() + Const.NEW_LINE
+                + recordType + Const.COLON + description;
     }
 
-    public String getFileName(){
-        return "diagnose_"+patient.getSurname()+".txt";
+    public String getFileName() {
+        return Const.DIAGNOSE + patient.getSurname() + Const.TXT_FORMAT;
     }
 }

@@ -18,7 +18,7 @@ public class AdminService {
     private static final String SELECT_ALL = "SELECT * FROM ";
     private static final String WHERE_ID = " WHERE doc_id=";
     private static final String ORDER_BY = " ORDER BY ";
-    private static final String SPACE =" ";
+    private static final String SPACE = " ";
 
     public static final int MY_SQL = 1;
     private DoctorDAO doctorDAO;
@@ -55,8 +55,16 @@ public class AdminService {
         userDAO.makeUserActive(patientDAO.getUserId(Integer.valueOf(patId)));
     }
 
+    /**
+     * Change appointment of doctor for patient
+     *
+     * @param patId    - id of patient
+     * @param newDocId - id of new (appointed) doctor
+     * @param lang     - local value, for taking patient and doctor
+     *                 from DB with the right language
+     */
     public void changeDoctorForPatient(String patId, String newDocId, String lang) {
-        Patient patient = patientDAO.getById(Integer.valueOf(patId),lang);
+        Patient patient = patientDAO.getById(Integer.valueOf(patId), lang);
         patient.setDoctor(doctorDAO.getById(Integer.valueOf(newDocId), lang));
         patientDAO.updateDoctor(patient);
     }
@@ -97,8 +105,17 @@ public class AdminService {
                 makeUpSortSelect(Const.PATIENTS, field, direction, doc_id), lang);
     }
 
-
-
+    /**
+     * Generic method make up a sorting SQL request depending on the incoming parameters;
+     * if doc_id empty return statement without where clause;
+     * where clause need for sorting patients of one doctor
+     *
+     * @param tableName - name of table from where you want get sorted data
+     * @param field     - field, by which sorting will be carried out
+     * @param direction - ASC or DESC way of sort
+     * @param doc_id    - doctor id, whose patients should be sort
+     * @return SQL statement as string
+     */
     private String makeUpSortSelect(String tableName, String field, String direction, String doc_id) {
         return (doc_id != null) ?
                 (SELECT_ALL + tableName + WHERE_ID + doc_id + ORDER_BY + field + SPACE + direction) :

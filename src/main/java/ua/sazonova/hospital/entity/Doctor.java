@@ -3,10 +3,8 @@ package ua.sazonova.hospital.entity;
 import ua.sazonova.hospital.entity.enam.DoctorType;
 
 import java.util.List;
-import java.util.function.DoublePredicate;
 
 public class Doctor {
-    public static final int DEFAULT_DOCTOR_ID = 103;
 
     private int id;
     private String name;
@@ -16,9 +14,19 @@ public class Doctor {
     private List<Patient> patients;
     private User user;
 
-    public Doctor() {
-    }
+    public Doctor() {}
 
+    /**
+     * All fields constructor
+     *
+     * @param id         - id of doctor
+     * @param name       - name of doctor
+     * @param surname    - surname of doctor
+     * @param type       - type of doctor (enumeration DoctorType)
+     * @param experience - work experience in years
+     * @param patients   - list of patients to whom he is assigned
+     * @param user       - contains more information about patient
+     */
     public Doctor(int id, String name, String surname, DoctorType type, int experience, List<Patient> patients, User user) {
         this.id = id;
         this.name = name;
@@ -29,7 +37,16 @@ public class Doctor {
         this.user = user;
     }
 
-    public Doctor(String name, String surname, DoctorType type, int experience, User user){
+    /**
+     * Constructor for registration
+     *
+     * @param name       - name of doctor
+     * @param surname    - surname of doctor
+     * @param type       - type of doctor (enumeration DoctorType)
+     * @param experience - work experience in years
+     * @param user       - contains more information about patient
+     */
+    public Doctor(String name, String surname, DoctorType type, int experience, User user) {
         this.name = name;
         this.surname = surname;
         this.type = type;
@@ -101,7 +118,7 @@ public class Doctor {
                 ", surname='" + surname + '\'' +
                 ", type=" + type +
                 ", experience=" + experience +
-//                ", patients=" + patients +
+                ", patients=" + patients +
                 ", user=" + user +
                 '}';
     }

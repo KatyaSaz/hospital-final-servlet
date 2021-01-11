@@ -1,10 +1,8 @@
 package ua.sazonova.hospital.entity;
 
-import org.mindrot.jbcrypt.BCrypt;
 import ua.sazonova.hospital.entity.enam.Role;
 
 public class User {
-   // private static int ENCODING_STRENGTH = 12;
 
     private int id;
     private String email;
@@ -13,9 +11,18 @@ public class User {
     private boolean isActive;
     private int idMoreInfo;
 
-    public User() {
-    }
+    public User() {}
 
+    /**
+     * All fields constructor
+     *
+     * @param id         - user id
+     * @param email      - user email
+     * @param password   - user password
+     * @param role       - role of user (could be admin, doctor or patient)
+     * @param isActive   - display whether user has received approval from the administrator for registration
+     * @param idMoreInfo - id from another table (doctors or patients) by it you can get more information about user
+     */
     public User(int id, String email, String password, Role role, boolean isActive, int idMoreInfo) {
         this.id = id;
         this.email = email;
@@ -25,15 +32,18 @@ public class User {
         this.idMoreInfo = idMoreInfo;
     }
 
-    public User(String email, String password, Role role){
+    /**
+     * Constructor for registration
+     *
+     * @param email    - user email
+     * @param password - user password
+     * @param role     - role of user (could be admin, doctor or patient)
+     */
+    public User(String email, String password, Role role) {
         this.email = email;
         this.role = role;
         this.password = password;
         setActive(false);
-    }
-
-    private String hashPassword(String password){
-        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public int getId() {
@@ -57,7 +67,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
 
     public Role getRole() {
@@ -95,5 +105,4 @@ public class User {
                 ", idMoreInfo=" + idMoreInfo +
                 '}';
     }
-
 }

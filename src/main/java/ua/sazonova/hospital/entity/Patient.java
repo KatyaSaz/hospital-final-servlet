@@ -19,6 +19,19 @@ public class Patient {
     public Patient() {
     }
 
+    /**
+     * All fields constructor
+     *
+     * @param id      - id of patient
+     * @param name    - name of patient
+     * @param surname - surname of patient
+     * @param gender  - gender of patient
+     * @param year    - year of birth
+     * @param phone   - phone number
+     * @param doctor  - appointed doctor
+     * @param user    - contains more information about patient
+     * @param records - records from his medical card
+     */
     public Patient(int id, String name, String surname, Gender gender, int year, String phone, Doctor doctor, User user, List<CardRecord> records) {
         this.id = id;
         this.name = name;
@@ -31,7 +44,17 @@ public class Patient {
         this.records = records;
     }
 
-    public Patient(String name, String surname, Gender gender, int year, String phone, User user){
+    /**
+     * Constructor for patient's registration
+     *
+     * @param name    - name of patient
+     * @param surname - surname of patient
+     * @param gender  - gender of patient
+     * @param year    - year of birth
+     * @param phone   - phone number
+     * @param user    - contains more information about patient
+     */
+    public Patient(String name, String surname, Gender gender, int year, String phone, User user) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -123,7 +146,7 @@ public class Patient {
                 ", phone='" + phone + '\'' +
                 ", doctor=" + doctor +
                 ", user=" + user +
-//                ", records=" + records +
+                ", records=" + records +
                 '}';
     }
 }

@@ -12,15 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlDoctorDAO implements DoctorDAO {
-
-    private final String SELECT_DOCTOR_BY_ID="SELECT * FROM `doctors` WHERE id=?";
+    private final String SELECT_DOCTOR_BY_ID = "SELECT * FROM `doctors` WHERE id=?";
     private final String SELECT_USER_ID = "SELECT user_id FROM `doctors` WHERE id=?";
     private final String SELECT_ID_BY_USER_ID = "SELECT `id` FROM `doctors` WHERE `user_id`=?";
-    private final String SELECT_ALL="SELECT * FROM `doctors`";
-    private final String SELECT_ALL_BY_ONE_TYPE ="SELECT * FROM `doctors` WHERE `type`=?";
+    private final String SELECT_ALL = "SELECT * FROM `doctors`";
+    private final String SELECT_ALL_BY_ONE_TYPE = "SELECT * FROM `doctors` WHERE `type`=?";
     private final String SELECT_NON_REGISTER = "SELECT doc.id, doc.name, doc.surname, doc.type, doc.experience, doc.user_id FROM users AS user LEFT JOIN doctors AS doc ON user.id=doc.user_id WHERE user.role='DOCTOR' AND user.is_active=false";
-    private final String INSERT_DOCTOR="INSERT INTO `doctors`(`name`, `surname`, `type`, `experience`, `user_id`, `name_ru`, `surname_ru`) VALUES (?,?,?,?,?,?,?)";
-    private final String DELETE_DOCTOR="DELETE FROM `doctors` WHERE id=?";
+    private final String INSERT_DOCTOR = "INSERT INTO `doctors`(`name`, `surname`, `type`, `experience`, `user_id`, `name_ru`, `surname_ru`) VALUES (?,?,?,?,?,?,?)";
+    private final String DELETE_DOCTOR = "DELETE FROM `doctors` WHERE id=?";
 
     private MySqlFactoryDAO factoryDAO;
 
@@ -33,7 +32,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
         PreparedStatement ps = connection.prepareStatement(SELECT_ID_BY_USER_ID);
         ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             doctorId = rs.getInt("id");
         }
         return doctorId;
@@ -69,7 +68,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }finally {
+        } finally {
             try {
                 connection.close();
             } catch (SQLException throwables) {
@@ -78,10 +77,10 @@ public class MySqlDoctorDAO implements DoctorDAO {
         }
     }
 
-    private void changeDoctor(int id){
+    private void changeDoctor(int id) {
         List<Patient> patients = getById(id, Const.EN).getPatients();
-        Doctor defaultDoc = getById(Doctor.DEFAULT_DOCTOR_ID, Const.EN);
-        for(Patient pat: patients){
+        Doctor defaultDoc = getById(Const.DEFAULT_DOCTOR_ID, Const.EN);
+        for (Patient pat : patients) {
             pat.setDoctor(defaultDoc);
             factoryDAO.getPatientDAO().updateDoctor(pat);
         }
@@ -96,7 +95,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
 
     @Override
     public void delete(int id) {
-        Connection connection= factoryDAO.getConnection();
+        Connection connection = factoryDAO.getConnection();
         try {
             connection.setAutoCommit(false);
             changeDoctor(id);
@@ -110,7 +109,7 @@ public class MySqlDoctorDAO implements DoctorDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }finally {
+        } finally {
             try {
                 connection.close();
             } catch (SQLException throwables) {
@@ -120,61 +119,39 @@ public class MySqlDoctorDAO implements DoctorDAO {
     }
 
     @Override
-    public int getUserId(int id){
+    public int getUserId(int id) {
         return factoryDAO.getUserDAO().getIdOfUser(id, SELECT_USER_ID);
     }
 
     private Doctor setUpDoctorInfo(ResultSet rs, Connection connection, String lang) throws SQLException {
-//        changeLanguage(String lang, Doctor doctor, Connection connection)
         Doctor doctor = new Doctor();
         doctor.setId(rs.getInt("id"));
         doctor.setName(
                 rs.getString(
-                (lang.equals(Const.RU))? "name_ru": "name"));
+                        (lang.equals(Const.RU)) ? "name_ru" : "name"));
         doctor.setSurname(
                 rs.getString(
-                        (lang.equals(Const.RU))? "surname_ru": "surname"));
-//                rs.getString("surname"));
+                        (lang.equals(Const.RU)) ? "surname_ru" : "surname"));
         doctor.setType(DoctorType.valueOf(rs.getString("type")));
         doctor.setExperience(rs.getInt("experience"));
         doctor.setUser(factoryDAO.getUserDAO().getById(rs.getInt("user_id"), connection));
-
         doctor.setPatients(factoryDAO.getPatientDAO().getPatientsOfOneDoctor(doctor, connection, lang));
         return doctor;
     }
 
-    @Override
-    public Doctor changeLanguage(String lang, Doctor doctor, Connection connection) {
-        try (PreparedStatement ps = connection.prepareStatement(SELECT_DOCTOR_BY_ID)) {
-            ps.setInt(1, doctor.getId());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                doctor.setName(
-                        rs.getString(
-                                (lang.equals(Const.RU)) ? "name_ru" : "name"));
-                doctor.setSurname(
-                        rs.getString(
-                                (lang.equals(Const.RU)) ? "surname_ru" : "surname"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return doctor;
-    }
-
-    private Doctor getDoctorByLanguage(int id, String lang){
+    private Doctor getDoctorByLanguage(int id, String lang) {
         Connection connection = factoryDAO.getConnection();
         Doctor doctor = null;
-        try(PreparedStatement ps = connection.prepareStatement(SELECT_DOCTOR_BY_ID)){
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_DOCTOR_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 doctor = setUpDoctorInfo(rs, connection, lang);
             }
             rs.close();
         } catch (SQLException exc) {
             exc.printStackTrace();
-        }finally {
+        } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
@@ -188,23 +165,19 @@ public class MySqlDoctorDAO implements DoctorDAO {
     public Doctor getById(int id, String lang) {
         return getDoctorByLanguage(id, lang);
     }
-//
-//    @Override
-//    public Doctor getRussianDoctor(int id) {
-//        return getDoctorByLanguage(id, Const.RU);
-//    }
 
-    private List<Doctor> getDoctorsByRequest(String request, String lang){
+    private List<Doctor> getDoctorsByRequest(String request, String lang) {
         List<Doctor> doctors = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
-        try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(request)){
-            while(rs.next()){
-                doctors.add(setUpDoctorInfo(rs, connection,lang));
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(request)) {
+            while (rs.next()) {
+                doctors.add(setUpDoctorInfo(rs, connection, lang));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }try {
+        }
+        try {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -231,16 +204,17 @@ public class MySqlDoctorDAO implements DoctorDAO {
     public List<Doctor> findBySameType(DoctorType doctorType, String lang) {
         List<Doctor> doctors = new ArrayList<>();
         Connection connection = factoryDAO.getConnection();
-        try(PreparedStatement ps = connection.prepareStatement(SELECT_ALL_BY_ONE_TYPE)){
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_ALL_BY_ONE_TYPE)) {
             ps.setString(1, doctorType.toString());
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 doctors.add(setUpDoctorInfo(rs, connection, lang));
             }
             rs.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }try {
+        }
+        try {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

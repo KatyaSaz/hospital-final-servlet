@@ -12,20 +12,20 @@ public class PatientService {
     private PatientDAO patientDAO;
     private CardRecordDAO cardRecordDAO;
 
-    public PatientService(){
+    public PatientService() {
         patientDAO = FactoryDAO.getInstance(MY_SQL).getPatientDAO();
         cardRecordDAO = FactoryDAO.getInstance(MY_SQL).getCardRecordDAO();
     }
 
-    public Patient getPatientById(String patientId, String lang){
-        return (patientId!=null)? patientDAO.getById(Integer.valueOf(patientId), lang): null;
+    public Patient getPatientById(String patientId, String lang) {
+        return (patientId != null) ? patientDAO.getById(Integer.valueOf(patientId), lang) : null;
     }
 
-    public CardRecord getIdOfCardRecordToSave(String saveCardId, String lang){
-        return  (saveCardId!=null)? cardRecordDAO.getByID(Integer.valueOf(saveCardId), lang):null;
+    public CardRecord getIdOfCardRecordToSave(String saveCardId, String lang) {
+        return (saveCardId != null) ? cardRecordDAO.getByID(Integer.valueOf(saveCardId), lang) : null;
     }
 
-    public void createCardRecord(String description_en, String description_ru, String type, int patId){
+    public void createCardRecord(String description_en, String description_ru, String type, int patId) {
         cardRecordDAO.create(description_en, description_ru, type, patId);
     }
 }

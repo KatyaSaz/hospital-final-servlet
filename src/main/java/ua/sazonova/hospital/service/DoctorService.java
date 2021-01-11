@@ -15,21 +15,17 @@ public class DoctorService {
     private PatientDAO patientDAO;
     FactoryDAO factoryDAO;
 
-    public DoctorService(){
-        factoryDAO=FactoryDAO.getInstance(MY_SQL);
+    public DoctorService() {
+        factoryDAO = FactoryDAO.getInstance(MY_SQL);
         doctorDAO = FactoryDAO.getInstance(MY_SQL).getDoctorDAO();
         patientDAO = FactoryDAO.getInstance(MY_SQL).getPatientDAO();
     }
 
-    public Doctor getDoctorById(String docID, String lang){
-        return (docID!=null)? doctorDAO.getById(Integer.valueOf(docID), lang): null;
+    public Doctor getDoctorById(String docID, String lang) {
+        return (docID != null) ? doctorDAO.getById(Integer.valueOf(docID), lang) : null;
     }
-//
-//    public Doctor getRussianDoctor(String docID){
-//        return (docID!=null)? doctorDAO.getRussianDoctor(Integer.valueOf(docID)): null;
-//    }
 
-    public List<Patient> getPatientsOfDoctor(Doctor doctor, String lang){
+    public List<Patient> getPatientsOfDoctor(Doctor doctor, String lang) {
         return patientDAO.getPatientsForDoctorService(doctor, lang);
     }
 }

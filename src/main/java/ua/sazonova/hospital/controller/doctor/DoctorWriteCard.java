@@ -2,7 +2,7 @@ package ua.sazonova.hospital.controller.doctor;
 
 import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
-import ua.sazonova.hospital.service.Local;
+import ua.sazonova.hospital.service.LocalService;
 import ua.sazonova.hospital.service.PatientService;
 
 import javax.servlet.RequestDispatcher;
@@ -21,7 +21,7 @@ public class DoctorWriteCard extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(View.DOCTOR_WRITE_RECORD_VIEW);
         String patId = req.getParameter(Const.PATIENT_ID);
-        req.setAttribute(Const.PATIENT, patientService.getPatientById(patId, Local.getLanguage(req)));
+        req.setAttribute(Const.PATIENT, patientService.getPatientById(patId, LocalService.getLanguage(req)));
         rd.forward(req, resp);
     }
 
@@ -34,6 +34,6 @@ public class DoctorWriteCard extends HttpServlet {
         String description_ru = req.getParameter(Const.CARD_DESCRIPTION_RU);
         String type = req.getParameter(Const.CARD_TYPE);
         patientService.createCardRecord(description_en, description_ru, type, patId);
-        resp.sendRedirect("./doctor-patient?"+Const.PATIENT_ID+"="+patId+"&sessionLocale="+ land);
+        resp.sendRedirect("/doctor-patient?"+Const.PATIENT_ID+"="+patId+"&sessionLocale="+ land);
     }
 }

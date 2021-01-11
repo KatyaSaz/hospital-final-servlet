@@ -9,11 +9,11 @@ public class AuthorizationService {
     public static final int MY_SQL = 1;
     private UserDAO userDAO;
 
-    public AuthorizationService(){
+    public AuthorizationService() {
         userDAO = FactoryDAO.getInstance(MY_SQL).getUserDAO();
     }
 
-     public User findUser(String login){
+    public User findUser(String login) {
         return userDAO.findByEmail(login);
     }
 }

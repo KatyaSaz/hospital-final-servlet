@@ -24,16 +24,16 @@ public class RegUserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String role = req.getParameter("role");
+        String email = req.getParameter(Const.EMAIL);
+        String password = req.getParameter(Const.PASSWORD);
+        String role = req.getParameter(Const.ROLE);
         if (email != null & password != null & role != null) {
             User user = new User(email, password, Role.valueOf(role));
             req.getSession().setAttribute(Const.USER_REG, user);
-            if(user.getRole().equals(Role.PATIENT)){
+            if (user.getRole().equals(Role.PATIENT)) {
                 resp.sendRedirect("/registration-patient");
-            }else if(user.getRole().equals(Role.DOCTOR)){
-                resp.sendRedirect("./registration-doctor");
+            } else if (user.getRole().equals(Role.DOCTOR)) {
+                resp.sendRedirect("/registration-doctor");
             }
         }
     }

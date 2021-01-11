@@ -4,10 +4,10 @@ import ua.sazonova.hospital.constants.Const;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Local {
+public class LocalService {
 
-    public static String getLanguage(HttpServletRequest req){
+    public static String getLanguage(HttpServletRequest req) {
         String lang = req.getParameter(Const.SESSION_LOCALE);
-       return (lang==null)? Const.EN:lang;
+        return (lang == null) ? Const.EN : lang;
     }
 }

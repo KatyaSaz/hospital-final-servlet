@@ -6,7 +6,7 @@ import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.User;
 import ua.sazonova.hospital.entity.enam.Role;
 import ua.sazonova.hospital.service.AuthorizationService;
-import ua.sazonova.hospital.service.Local;
+import ua.sazonova.hospital.service.LocalService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,25 +27,25 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String logOut = req.getParameter(Const.LOG_OUT);
-        if(logOut!=null){
+        if (logOut != null) {
             req.getSession().setAttribute(Const.USER, null);
-            resp.sendRedirect("./login");
+            resp.sendRedirect("/login");
         }
 
         String username = req.getParameter(Const.EMAIL);
         String password = req.getParameter(Const.PASSWORD);
-        if(username!=null & password!=null){
+        if (username != null & password != null) {
             User user = authorizationService.findUser(username);
             if (user != null) {
                 if (BCrypt.checkpw(password, user.getPassword())) {
                     req.getSession().setAttribute(Const.USER, user);
                     if (user.getRole().equals(Role.DOCTOR)) {
-                        resp.sendRedirect("/doctor?"+Const.DOCTOR_ID+"=" + user.getIdMoreInfo()+"&sessionLocale="+ Local.getLanguage(req));
+                        resp.sendRedirect("/doctor?" + Const.DOCTOR_ID + "=" + user.getIdMoreInfo() + "&sessionLocale=" + LocalService.getLanguage(req));
                     } else if (user.getRole().equals(Role.PATIENT)) {
-                        resp.sendRedirect("/patient?"+Const.PATIENT_ID+"=" + user.getIdMoreInfo()+"&sessionLocale="+ Local.getLanguage(req));
+                        resp.sendRedirect("/patient?" + Const.PATIENT_ID + "=" + user.getIdMoreInfo() + "&sessionLocale=" + LocalService.getLanguage(req));
                     } else if (user.getRole().equals(Role.ADMIN)) {
                         resp.sendRedirect("/admin");
-                    }else if(!user.isActive()){
+                    } else if (!user.isActive()) {
                         req.getRequestDispatcher(View.WAIT_FOR_ADMIN_TO_APPROVE).forward(req, resp);
                     }
                 } else {

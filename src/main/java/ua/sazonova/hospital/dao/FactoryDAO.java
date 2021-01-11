@@ -7,8 +7,11 @@ public abstract class FactoryDAO {
     public final static int MY_SQL = 1;
 
     public abstract UserDAO getUserDAO();
+
     public abstract CardRecordDAO getCardRecordDAO();
-    public  abstract DoctorDAO getDoctorDAO();
+
+    public abstract DoctorDAO getDoctorDAO();
+
     public abstract PatientDAO getPatientDAO();
 
     public static FactoryDAO getInstance(int sourceType) {
@@ -19,7 +22,4 @@ public abstract class FactoryDAO {
                 return null;
         }
     }
-
-
-
 }

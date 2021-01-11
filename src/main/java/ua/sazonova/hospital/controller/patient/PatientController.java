@@ -3,8 +3,7 @@ package ua.sazonova.hospital.controller.patient;
 import ua.sazonova.hospital.constants.Const;
 import ua.sazonova.hospital.constants.View;
 import ua.sazonova.hospital.entity.CardRecord;
-import ua.sazonova.hospital.entity.Doctor;
-import ua.sazonova.hospital.service.Local;
+import ua.sazonova.hospital.service.LocalService;
 import ua.sazonova.hospital.service.PatientService;
 
 import javax.servlet.RequestDispatcher;
@@ -27,7 +26,7 @@ public class PatientController extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher(View.PATIENT_VIEW);
         String patientId = req.getParameter(Const.PATIENT_ID);
         req.setAttribute(Const.PATIENT,
-                patientService.getPatientById(patientId, Local.getLanguage(req)));
+                patientService.getPatientById(patientId, LocalService.getLanguage(req)));
         rd.forward(req, resp);
     }
 
@@ -35,7 +34,7 @@ public class PatientController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         String saveId = req.getParameter(Const.DOWNLOAD_CARD_ID);
         CardRecord cardRecord =
-                patientService.getIdOfCardRecordToSave(saveId, Local.getLanguage(req));
+                patientService.getIdOfCardRecordToSave(saveId, Const.EN);
         resp.setContentType("text");
         resp.setHeader("Content-disposition", "attachment;filename=" + cardRecord.getFileName());
         try (BufferedOutputStream outStream = new BufferedOutputStream(resp.getOutputStream())) {
